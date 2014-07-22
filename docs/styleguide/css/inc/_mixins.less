@@ -1,0 +1,42 @@
+// .rem(@property, @values...)
+//
+// gives a property a rem value with a pixel fallback
+.rem-init(@basePxValue: 16) {
+  html, body {
+    font-size: unit(@basePxValue, px);
+  }
+
+  .rem(@property; @pxValue) {
+    @{property}: unit(@pxValue, px);
+    @{property}: unit(@pxValue / @basePxValue, rem);
+  }
+}
+
+.clearfix() {
+  &::after,
+  &::before {
+    display: table;
+    content: ' ';
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+@deviceLarge: 1200;
+@deviceMedium: 992;
+@deviceSmall: 768;
+
+.grid-init(@fullWidth: 1140, @numCols: 12, @colWidth: 75) {
+
+  @gutterWidth = (@fullWidth / @numCols) - @colWidth;
+
+  .row() {
+    .clearfix();
+    .rem(margin-left, -@gutterWidth);
+    .rem(margin-right, -@gutterWidth);
+  }
+
+
+
+}

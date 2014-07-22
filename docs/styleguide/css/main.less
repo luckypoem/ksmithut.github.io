@@ -1,0 +1,49 @@
+@import "_mixins";
+@import "_vars";
+
+.rem-init(16);
+.grid-init(1140, 12, 75);
+/**
+ * ksmithut.github.com style guide
+ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  color: @black;
+  font-family: @sansSerif;
+}
+
+// TEXT
+// ====
+h1 { .rem(font-size, 32); }
+h2 { .rem(font-size, 24); }
+h3 { .rem(font-size, 18); }
+h4 { .rem(font-size, 16); }
+h5 { .rem(font-size, 13); }
+h6 { .rem(font-size, 10); }
+h1, h2, h3, h4, h5, h6, {
+  font-weight: 600;
+}
+
+p {
+  .rem(font-size, 16);
+  font-weight: 200;
+}
+strong { font-weight: 600 }
+
+code {
+  background: @black;
+  color: @white;
+  font-family: @monospace;
+  display: block;
+}
+
+blockquote {
+  color: @gray;
+  border-left-color: @blue;
+  border-left-style: solid;
+  .rem(border-left-width, 8);
+  margin-left: 0;
+  .rem(padding-left, 8);
+}
