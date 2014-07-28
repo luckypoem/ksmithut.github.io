@@ -2,16 +2,34 @@
 @import "_vars";
 
 .rem-init(16);
-.grid-init(1140, 12, 75);
+.grid-init(12, 30);
 /**
  * ksmithut.github.com style guide
  */
+
+// lets make this viewport work correctly on *most* devices
+@-ms-viewport { width: device-width; }
+@viewport { width: device-width; }
 
 html, body {
   margin: 0;
   padding: 0;
   color: @black;
   font-family: @sansSerif;
+}
+
+// LAYOUT
+// ======
+.container { .container(); }
+.row { .row(); }
+
+.main-content {
+  .col();
+  .col-md(9);
+}
+.sidebar {
+  .col();
+  .col-md(3);
 }
 
 // TEXT
@@ -37,6 +55,12 @@ code {
   color: @white;
   font-family: @monospace;
   display: block;
+  .rem(border-radius, 5);
+  @padding: 10;
+  .rem(padding-top, @padding);
+  .rem(padding-right, @padding);
+  .rem(padding-bottom, @padding);
+  .rem(padding-left, @padding);
 }
 
 blockquote {
@@ -45,5 +69,5 @@ blockquote {
   border-left-style: solid;
   .rem(border-left-width, 8);
   margin-left: 0;
-  .rem(padding-left, 8);
+  .rem(padding-left, 16);
 }
