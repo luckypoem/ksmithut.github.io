@@ -35,7 +35,6 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    box-sizing: border-box;
     .rem(padding-left, @halfGutterWidth);
     .rem(padding-right, @halfGutterWidth);
     @media (min-width: unit(@screenSmall, px)) {
@@ -50,14 +49,12 @@
   }
 
   .row() {
-    box-sizing: border-box;
     .clearfix();
     .rem(margin-left, -@halfGutterWidth);
     .rem(margin-right, -@halfGutterWidth);
   }
 
   .col() {
-    box-sizing: border-box;
     float: left;
     width: 100%;
     .rem(padding-left, @halfGutterWidth);

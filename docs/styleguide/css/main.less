@@ -16,6 +16,11 @@ html, body {
   padding: 0;
   color: @black;
   font-family: @sansSerif;
+  background-color: @white;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 // LAYOUT
@@ -44,19 +49,29 @@ h1, h2, h3, h4, h5, h6, {
   font-weight: 600;
 }
 
-p {
+p, input, textarea, select, ul, ol {
   .rem(font-size, 16);
+  .rem(line-height, 26);
   font-weight: 200;
 }
 strong { font-weight: 600 }
+
+a {
+  color: @blue;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover { color: darken(@blue, 15); }
+}
 
 code {
   background: @black;
   color: @white;
   font-family: @monospace;
   display: block;
+  overflow: scroll;
   .rem(border-radius, 5);
-  @padding: 10;
+  @padding: 16;
   .rem(padding-top, @padding);
   .rem(padding-right, @padding);
   .rem(padding-bottom, @padding);
@@ -71,3 +86,60 @@ blockquote {
   margin-left: 0;
   .rem(padding-left, 16);
 }
+
+ul, ol {
+  .rem(padding-left, 20);
+}
+
+form {
+  .row();
+}
+
+.form-group {
+  .col();
+  position: relative;
+  .rem(padding-bottom, 10);
+}
+
+label {
+  display: block;
+  background: fade(white, 90%);
+  .rem(border-radius, 5);
+  position: absolute;
+  .rem(top, 16);
+  .rem(left, 32);
+  .rem(font-size, 13);
+  color: @blue;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.js-hide-label label {
+  opacity: 0;
+  .rem(top, 20);
+}
+
+.js-unhighlight-label label {
+  color: @gray;
+}
+
+.form-control {
+  display: block;
+  margin: 0;
+  border: 0;
+  background: white;
+  width: 100%;
+  .rem(padding-top, 40);
+  .rem(padding-right, 16);
+  .rem(padding-bottom, 16);
+  .rem(padding-left, 16);
+  box-shadow: inset 0 0 3px 0 @gray;
+}
+textarea {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+
+
+

@@ -21,9 +21,11 @@
             <h6>This is an &lt;h6&gt;</h6>
             <p>This is a paragraph</p>
             <p>This is a paragraph with <strong>bold</strong> text</p>
+            <p>This is a paragraph with a <a href="/">link</a>
             <p>This is a multi-line paragraph that has a lot of text that should have the capacity to test the line-height of paragraphs. You should really be paying attention to the line-height of text as it affects the readability of your content.</p>
             <pre><code>// This is some code in a block;
-// And this is the second line</code></pre>
+// And this is the second line
+// This is a really long line of code to test out the overflow scroll feature. This is so we don't get confused as to what the codeblock is saying when the line wraps</code></pre>
             <blockquote cite="someurl">
               <p>
                 This is a blockquote<br>
@@ -32,6 +34,44 @@
                 this border on the left.
               </p>
             </blockquote>
+            <ul>
+              <li>This is an unordered list</li>
+              <li>Look at another item</li>
+              <li>This is a nested list
+                <ul>
+                  <li>A nested item</li>
+                  <li>Another nested item</li>
+                </ul>
+              </li>
+            </ul>
+            <ol>
+              <li>This is an ordered list</li>
+              <li>Look at antoher item</li>
+              <li>This is a nested list
+                <ol>
+                  <li>A nested item</li>
+                  <li>Another nested item</li>
+                </ol>
+              </li>
+            </ol>
+            <form>
+              <div class="form-group">
+                <label>First Name</label>
+                <input class="form-control" type="text">
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input class="form-control" type="text">
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email">
+              </div>
+              <div class="form-group">
+                <label>Message</label>
+                <textarea class="form-control"></textarea>
+              </div>
+            </form>
           </article>
         </main>
         <aside class="sidebar">
@@ -42,5 +82,6 @@
     <footer>
 
     </footer>
+    <script src="js/main.js"></script>
   </body>
 </html>
