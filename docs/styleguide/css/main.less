@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6, {
   font-weight: 600;
 }
 
-p, input, textarea, select, ul, ol {
+p, label, input, textarea, select, ul, ol {
   .rem(font-size, 16);
   .rem(line-height, 26);
   font-weight: 200;
@@ -98,20 +98,21 @@ form {
 .form-group {
   .col();
   position: relative;
-  .rem(padding-bottom, 10);
+  .rem(padding-bottom, 0);
+  .rem(padding-top, 30);
 }
 
 label {
+  opacity: 1;
   display: block;
-  background: fade(white, 90%);
-  .rem(border-radius, 5);
   position: absolute;
-  .rem(top, 16);
-  .rem(left, 32);
-  .rem(font-size, 13);
+  .rem(top, 6);
+  .rem(left, 16);
   color: @blue;
   font-weight: 600;
-  transition: all 0.2s ease-in-out;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  transition-property: top, opacity, color;
 }
 
 .js-hide-label label {
@@ -129,11 +130,12 @@ label {
   border: 0;
   background: white;
   width: 100%;
-  .rem(padding-top, 40);
-  .rem(padding-right, 16);
-  .rem(padding-bottom, 16);
-  .rem(padding-left, 16);
+  .rem(padding-top, 5);
+  .rem(padding-right, 5);
+  .rem(padding-bottom, 5);
+  .rem(padding-left, 5);
   box-shadow: inset 0 0 3px 0 @gray;
+  .rem(border-radius, 5);
 }
 textarea {
   max-width: 100%;

@@ -80,10 +80,15 @@
               return;
           }
           tools.addClass(formGroup, options.hideLabelClass);
+          label[0].style.display = 'none';
           input.placeholder = labelText;
           input.onkeyup     = inputKeyUp;
           input.onblur      = inputBlur;
           input.onfocus     = inputFocus;
+
+          setTimeout(function () {
+            label[0].style.display = '';
+          }, 1000);
         }
       }
 
