@@ -10,6 +10,19 @@
     @{property}: unit(@pxValue, px);
     @{property}: unit(@pxValue / @basePxValue, rem);
   }
+
+  .rem-padding(@top; @right; @bottom; @left) {
+    @toppx: unit(@top, px);
+    @rightpx: unit(@right, px);
+    @bottompx: unit(@bottom, px);
+    @leftpx: unit(@left, px);
+    @toprem: unit(@top / @basePxValue, rem);
+    @rightrem: unit(@right / @basePxValue, rem);
+    @bottomrem: unit(@bottom / @basePxValue, rem);
+    @leftrem: unit(@left / @basePxValue, rem);
+    padding: @toppx @rightpx @bottompx @leftpx;
+    padding: @toprem @rightrem @bottomrem @leftrem;
+  }
 }
 
 .clearfix() {

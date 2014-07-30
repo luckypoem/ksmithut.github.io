@@ -40,7 +40,7 @@
       options = tools.defaults(options, {
         formGroupSelector: '.form-group',
         hideLabelClass: 'js-hide-label',
-        unhighlightClass: 'js-unhighlight-label'
+        highlightClass: 'js-highlight-label'
       });
 
       // get the form groups on the page
@@ -55,13 +55,6 @@
 
       // iterateFormGroup
       // ----------------
-      //
-      // Attaches the events to the given input inside of a form group
-      //
-      // ### Parameters
-      //
-      // * formGroup (HTMLElement) - The DOM node that houses the form element
-      // and the label
       function iterateFormGroup(formGroup) {
         // Add the hide class to the label
 
@@ -94,10 +87,6 @@
 
       // inputKeyUp
       // ----------
-      //
-      // This is the keyup handler for inputs. On keyup, if there is a value,
-      // it removes the hide label class to the form group. Otherwise, it adds
-      // it
       function inputKeyUp() {
         var parent = this.parentNode;
         if (!this.value) {
@@ -109,31 +98,21 @@
 
       // inputBlur
       // ---------
-      //
-      // This is the blur handler for inputs. On blur, if there is a value,
-      // it removes the hide label class from the form group and adds the
-      // unhighlight class to the form group. Otherwise, it adds the hide
-      // label class
       function inputBlur() {
         var parent = this.parentNode;
         if (!this.value) {
           tools.addClass(parent, options.hideLabelClass);
         } else {
           tools.removeClass(parent, options.hideLabelClass);
-          tools.addClass(parent, options.unhighlightClass);
         }
+        tools.removeClass(parent, options.highlightClass);
       }
 
       // inputFocus
       // ----------
-      //
-      // This is the focus handler for inputs. On focus, if there is a value,
-      // it removes the unhighlight class
       function inputFocus() {
         var parent = this.parentNode;
-        if (this.value) {
-          tools.removeClass(parent, options.unhighlightClass);
-        }
+        tools.addClass(parent, options.highlightClass);
       }
     }
   };
