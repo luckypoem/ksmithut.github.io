@@ -37,6 +37,13 @@
     init: function (options) {
       if (!supports.querySelectorAll || !supports.placeholder) { return; }
 
+      var invalidTypes = [
+        'checkbox',
+        'radio',
+        'button',
+        'submit'
+      ];
+
       options = tools.defaults(options, {
         formGroupSelector: '.form-group',
         hideLabelClass: 'js-hide-label',
@@ -61,27 +68,28 @@
         // get the required elements
         var input  = formGroup.querySelectorAll('input, textarea');
         var label  = formGroup.querySelectorAll('label');
-        var labelText = label[0] ? label[0].innerText : 'Fill this out';
+        var labelText = label[0] ? label[0].textContent : null;
+
+        if (!labelText) { return; }
 
         if (input[0]) {
           input = input[0];
-          switch (input.type) {
-            case 'checkbox':
-            case 'radio':
-            case 'button':
-            case 'submit':
-              return;
-          }
-          tools.addClass(formGroup, options.hideLabelClass);
-          label[0].style.display = 'none';
+          // if it's any of the following
+          if (invalidTypes.indexOf(input.type) !== -1) { return; }
+
           input.placeholder = labelText;
           input.onkeyup     = inputKeyUp;
           input.onblur      = inputBlur;
           input.onfocus     = inputFocus;
 
+          // Set the label display to none initially, then remove the style.
+          // This is so we don't cause a flash of the label hiding
+          label[0].style.display = 'none';
           setTimeout(function () {
             label[0].style.display = '';
-          }, 1000);
+          }, 500);
+
+          tools.addClass(formGroup, options.hideLabelClass);
         }
       }
 
@@ -213,7 +221,68 @@
     }
   };
 
+  // ready
+  // =====
+  //
+  // This is the content loader used by popular libraries such as jQuery,
+  // except it wasn't the jQuery team to developed it. This guy deverves the
+  // credit
+  // https://github.com/dperini/ContentLoaded/blob/master/src/contentloaded.js
+  //
+  // contentloaded.js
+  //
+  // Author: Diego Perini (diego.perini at gmail.com)
+  // Summary: cross-browser wrapper for DOMContentLoaded
+  // Updated: 20101020
+  // License: MIT
+  // Version: 1.2
+  //
+  // URL:
+  // http://javascript.nwbox.com/ContentLoaded/
+  // http://javascript.nwbox.com/ContentLoaded/MIT-LICENSE
+  //
+  // @win window reference
+  // @fn function reference
+  function ready(win, fn) {
+    /* jshint maxcomplexity: false */
+
+    var done = false, top = true,
+
+    doc = win.document, root = doc.documentElement,
+
+    add = doc.addEventListener ? 'addEventListener' : 'attachEvent',
+    rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent',
+    pre = doc.addEventListener ? '' : 'on',
+
+    init = function(e) {
+      if (e.type === 'readystatechange' && doc.readyState !== 'complete') {
+        return;
+      }
+      (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
+      if (!done && (done = true)) { fn.call(win, e.type || e); }
+    },
+
+    poll = function() {
+      try { root.doScroll('left'); } catch(e) { setTimeout(poll, 50); return; }
+      init('poll');
+    };
+
+    if (doc.readyState === 'complete') { fn.call(win, 'lazy'); }
+    else {
+      if (doc.createEventObject && root.doScroll) {
+        try { top = !win.frameElement; } catch(e) { }
+        if (top) { poll(); }
+      }
+      doc[add](pre + 'DOMContentLoaded', init, false);
+      doc[add](pre + 'readystatechange', init, false);
+      win[add](pre + 'load', init, false);
+    }
+
+  }
+
   // Initialization
   // ==============
-  floatingLabel.init();
+  ready(window, function () {
+    floatingLabel.init();
+  });
 })();

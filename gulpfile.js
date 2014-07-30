@@ -23,7 +23,7 @@ var p       = require('gulp-load-plugins')();
     return gulp.src(path.join(styleDir, 'main.less'))
       .pipe(p.less({paths: [path.join(styleDir, 'inc')]}))
       .pipe(p.autoprefixer())
-      //.pipe(p.csso())
+      .pipe(p.csso())
       .pipe(gulp.dest(styleDir));
   });
 
