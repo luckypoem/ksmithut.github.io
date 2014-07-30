@@ -97,22 +97,16 @@
       // ----------
       function inputKeyUp() {
         var parent = this.parentNode;
-        if (!this.value) {
-          tools.addClass(parent, options.hideLabelClass);
-        } else {
-          tools.removeClass(parent, options.hideLabelClass);
-        }
+        var classMethod = this.value ? 'removeClass' : 'addClass';
+        tools[classMethod](parent, options.hideLabelClass);
       }
 
       // inputBlur
       // ---------
       function inputBlur() {
         var parent = this.parentNode;
-        if (!this.value) {
-          tools.addClass(parent, options.hideLabelClass);
-        } else {
-          tools.removeClass(parent, options.hideLabelClass);
-        }
+        var classMethod = this.value ? 'removeClass' : 'addClass';
+        tools[classMethod](parent, options.hideLabelClass);
         tools.removeClass(parent, options.highlightClass);
       }
 
