@@ -67,6 +67,7 @@
 
         // get the required elements
         var input  = formGroup.querySelectorAll('input, textarea');
+        var select = formGroup.querySelectorAll('select');
         var label  = formGroup.querySelectorAll('label');
         var labelText = label[0] ? label[0].textContent : null;
 

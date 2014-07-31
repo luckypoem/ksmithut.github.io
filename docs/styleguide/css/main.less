@@ -14,7 +14,6 @@
 html, body {
   margin: 0;
   padding: 0;
-  color: @black;
   font-family: @sansSerif;
   background-color: @white;
 }
@@ -53,6 +52,7 @@ p, label, input, textarea, select, ul, ol {
   .rem(font-size, 16);
   .rem(line-height, 26);
   font-weight: 200;
+  color: @black;
 }
 strong { font-weight: 600 }
 
@@ -110,6 +110,18 @@ label {
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
   transition-property: top, opacity, color;
+
+  &.checkbox,
+  &.radio {
+    position: static;
+    font-weight: 200;
+    cursor: pointer;
+    .rem(margin-bottom, 5);
+
+    & input {
+      .rem(margin-right, 10);
+    }
+  }
 }
 
 .js-hide-label label {
@@ -130,6 +142,16 @@ label {
   .rem(padding, 5);
   box-shadow: inset 0 0 3px 0 @gray;
   .rem(border-radius, 5);
+  .rem(height, 36);
+
+  select& {
+    box-shadow: 0 0 3px 1px @light-gray;
+    .rem(padding-top, 10);
+  }
+
+  textarea& {
+    height: auto;
+  }
 }
 textarea {
   max-width: 100%;
