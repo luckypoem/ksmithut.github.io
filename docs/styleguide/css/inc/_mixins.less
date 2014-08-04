@@ -1,48 +1,8 @@
-// .rem(@property, @values...)
-//
-// gives a property a rem value with a pixel fallback
-.rem-init(@basePxValue: 16) {
-  html, body {
-    font-size: unit(@basePxValue, px);
-  }
-
-  .rem(@property; @pxValue) {
-    @{property}: unit(@pxValue, px);
-    @{property}: unit(@pxValue / @basePxValue, rem);
-  }
-
-  .rem-padding(@top; @right; @bottom; @left) {
-    @toppx: unit(@top, px);
-    @rightpx: unit(@right, px);
-    @bottompx: unit(@bottom, px);
-    @leftpx: unit(@left, px);
-    @toprem: unit(@top / @basePxValue, rem);
-    @rightrem: unit(@right / @basePxValue, rem);
-    @bottomrem: unit(@bottom / @basePxValue, rem);
-    @leftrem: unit(@left / @basePxValue, rem);
-    padding: @toppx @rightpx @bottompx @leftpx;
-    padding: @toprem @rightrem @bottomrem @leftrem;
-  }
-
-  .rem-margin(@top; @right; @bottom; @left) {
-    @toppx: unit(@top, px);
-    @rightpx: unit(@right, px);
-    @bottompx: unit(@bottom, px);
-    @leftpx: unit(@left, px);
-    @toprem: unit(@top / @basePxValue, rem);
-    @rightrem: unit(@right / @basePxValue, rem);
-    @bottomrem: unit(@bottom / @basePxValue, rem);
-    @leftrem: unit(@left / @basePxValue, rem);
-    margin: @toppx @rightpx @bottompx @leftpx;
-    margin: @toprem @rightrem @bottomrem @leftrem;
-  }
-}
-
 .clearfix() {
   &::after,
   &::before {
     display: table;
-    content: ' ';
+    content: '';
   }
   &::after {
     clear: both;
@@ -61,34 +21,31 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    .rem(padding-left, @halfGutterWidth);
-    .rem(padding-right, @halfGutterWidth);
+    padding: 0 unit(@halfGutterWidth, px);
   }
 
   .container() {
     .container-responsive();
     @media (min-width: unit(@screenSmall, px)) {
-      .rem(width, @screenSmall - @gutterWidth);
+      width: unit(@screenSmall - @gutterWidth, px);
     }
     @media (min-width: unit(@screenMedium, px)) {
-      .rem(width, @screenMedium - @gutterWidth);
+      width: unit(@screenMedium - @gutterWidth, px);
     }
     @media (min-width: unit(@screenLarge, px)) {
-      .rem(width, @screenLarge - @gutterWidth);
+      width: unit(@screenLarge - @gutterWidth, px);
     }
   }
 
   .row() {
     .clearfix();
-    .rem(margin-left, -@halfGutterWidth);
-    .rem(margin-right, -@halfGutterWidth);
+    margin: 0 unit(-@halfGutterWidth, px);
   }
 
   .col() {
     float: left;
     width: 100%;
-    .rem(padding-left, @halfGutterWidth);
-    .rem(padding-right, @halfGutterWidth);
+    padding: 0 unit(@halfGutterWidth, px);
   }
 
   .col-xs(@cols: 1) when (@cols <= @numCols) and (@cols > 0) {

@@ -1,7 +1,7 @@
 @import "_mixins";
 @import "_vars";
 
-.rem-init(16);
+html, body { font-size: 16px; }
 .grid-init(12, 30);
 /**
  * ksmithut.github.com style guide
@@ -38,19 +38,19 @@ html, body {
 
 // TEXT
 // ====
-h1 { .rem(font-size, 32); }
-h2 { .rem(font-size, 24); }
-h3 { .rem(font-size, 18); }
-h4 { .rem(font-size, 16); }
-h5 { .rem(font-size, 13); }
-h6 { .rem(font-size, 10); }
+h1 { font-size: 32px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+h5 { font-size: 13px; }
+h6 { font-size: 10px; }
 h1, h2, h3, h4, h5, h6, {
   font-weight: 600;
 }
 
 p, label, input, textarea, select, ul, ol {
-  .rem(font-size, 16);
-  .rem(line-height, 26);
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 200;
   color: @black;
 }
@@ -70,21 +70,22 @@ code {
   font-family: @monospace;
   display: block;
   overflow: scroll;
-  .rem(border-radius, 5);
-  .rem(padding, 16);
+  border-radius: 5px;
+  padding: 16px;
 }
 
 blockquote {
   color: @gray;
-  border-left-color: @blue;
-  border-left-style: solid;
-  .rem(border-left-width, 8);
+  border-left: 8px solid @blue;
   margin-left: 0;
-  .rem(padding-left, 16);
+  margin-right: 0;
+  padding: 0 16px;
+
+  & p { color: @gray; }
 }
 
 ul, ol {
-  .rem(padding-left, 20);
+  padding-left: 20px;
 }
 
 // Forms
@@ -96,15 +97,15 @@ form {
 .form-group {
   .col();
   position: relative;
-  .rem(padding-top, 30);
+  padding-top: 30px;
 }
 
 label {
   opacity: 1;
   display: block;
   position: absolute;
-  .rem(top, 6);
-  .rem(left, 16);
+  top: 6px;
+  left: 16px;
   color: @gray;
   font-weight: 600;
   transition-duration: 0.2s;
@@ -116,17 +117,17 @@ label {
     position: static;
     font-weight: 200;
     cursor: pointer;
-    .rem(margin-bottom, 5);
+    margin-bottom: 5px;
 
     & input {
-      .rem(margin-right, 10);
+      margin-right: 10px;
     }
   }
 }
 
 .js-hide-label label {
   opacity: 0;
-  .rem(top, 10);
+  top: 10px;
 }
 
 .js-highlight-label label {
@@ -139,14 +140,14 @@ label {
   border: 0;
   background: white;
   width: 100%;
-  .rem(padding, 5);
+  padding: 5px;
   box-shadow: inset 0 0 3px 0 @gray;
-  .rem(border-radius, 5);
-  .rem(height, 36);
+  border-radius: 5px;
+  height: 36px;
 
   select& {
     box-shadow: 0 0 3px 1px @light-gray;
-    .rem(padding-top, 10);
+    padding-top: 10px;
   }
 
   textarea& {
