@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <header>
-      <h1>ksmithut's styleguide</h1>
+    <header class="page-header">
+      <div class="container">
+        <h1>ksmithut's styleguide</h1>
+      </div>
     </header>
     <section class="container">
       <section class="row">
@@ -105,11 +107,47 @@
                   <input type="radio" name="radio">This is a radio
                 </label>
               </div>
+              <div class="form-group">
+                <button class="button">Button</button>
+                <input class="button" type="submit" value="Submit Input">
+                <input class="button" type="button" value="Button Input">
+                <input class="button button-primary" type="button" value="Primary">
+                <input class="button button-success" type="button" value="Success">
+                <input class="button button-warning" type="button" value="Warning">
+                <input class="button button-danger" type="button" value="Danger">
+              </div>
             </form>
           </article>
         </main>
         <aside class="sidebar">
-          <h2>This is the sidebar</h2>
+          <div class="panel">
+            <div class="panel-title">
+              <h3>This is a panel</h3>
+            </div>
+            <div class="panel-content">
+              <p>This is some content</p>
+              <ul>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+              </ul>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">
+              <h3>This is a panel</h3>
+            </div>
+            <div class="panel-content">
+              <p>This is some content</p>
+              <ul>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+                <li>This is a list item</li>
+              </ul>
+            </div>
+          </div>
         </aside>
       </section>
     </main>

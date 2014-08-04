@@ -1,7 +1,10 @@
 @import "_mixins";
 @import "_vars";
 
-html, body { font-size: 16px; }
+html, body {
+  font-size: 16px;
+  color: @black;
+}
 .grid-init(12, 30);
 /**
  * ksmithut.github.com style guide
@@ -48,18 +51,16 @@ h1, h2, h3, h4, h5, h6, {
   font-weight: 600;
 }
 
-p, label, input, textarea, select, ul, ol {
+p, label, input, textarea, select, ul, ol, button {
   font-size: 16px;
   line-height: 22px;
   font-weight: 200;
-  color: @black;
 }
 strong { font-weight: 600 }
 
 a {
   color: @blue;
   text-decoration: none;
-  transition: all 0.2s ease-in-out;
 
   &:hover { color: darken(@blue, 15); }
 }
@@ -80,8 +81,6 @@ blockquote {
   margin-left: 0;
   margin-right: 0;
   padding: 0 16px;
-
-  & p { color: @gray; }
 }
 
 ul, ol {
@@ -146,7 +145,7 @@ label {
   height: 36px;
 
   select& {
-    box-shadow: 0 0 3px 1px @light-gray;
+    box-shadow: 0 0 3px 1px @lightGray;
     padding-top: 10px;
   }
 
@@ -159,6 +158,63 @@ textarea {
   min-width: 100%;
   font-family: @sansSerif;
   font-weight: 400;
+}
+.button {
+  border: 0;
+  background-color: @lightGray;
+  padding: 5px 10px;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px @black;
+  transition: all 0.1s ease-in-out;
+
+  &:hover { background-color: lighten(@lightGray, 10); }
+  &:active { transform: scale(0.95); }
+
+  &.button-primary {
+    background-color: @blue;
+    color: @white;
+    &:hover { background-color: lighten(@blue, 10); }
+  }
+  &.button-danger {
+    background-color: @red;
+    color: @white;
+    &:hover { background-color: lighten(@red, 10); }
+  }
+  &.button-success {
+    background-color: @green;
+    color: @white;
+    &:hover { background-color: lighten(@green, 10); }
+  }
+  &.button-warning {
+    background-color: @yellow;
+    color: @white;
+    &:hover { background-color: lighten(@yellow, 10); }
+  }
+}
+
+// Theme
+.page-header {
+  background-color: @black;
+  color: @white;
+  .clearfix();
+}
+
+// Components
+.panel {
+  background: @lightGray;
+  margin-bottom: 15px;
+}
+.panel-title {
+  background: @blue;
+  color: white;
+  text-align: center;
+  padding: 0 15px;
+  .clearfix();
+}
+.panel-content {
+  padding: 15px;
 }
 
 
