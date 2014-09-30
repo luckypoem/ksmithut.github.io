@@ -2,40 +2,52 @@
 
 var gulp    = require('gulp');
 var path    = require('path');
-var express = require('express');
-var p       = require('gulp-load-plugins')();
+var $       = require('gulp-load-plugins')();
+var config  = require('configly').setConfig(path.join(__dirname, 'config'));
 
-// Style Guide Builder/Server
-// ==========================
-(function () {
-  var mainDir  = path.join(__dirname, 'docs/styleguide');
-  var styleDir = path.join(mainDir, 'css');
-  var port     = 8001;
+var styles = config.get('build.styles');
+gulp.task('styles', function () {
+  return gulp.src(styles.src)
+    .pipe($.sourcemaps.init())
+      .pipe($.concat(styles.file))
+      .pipe($.less({ paths: styles.inc }))
+      .pipe($.pleeease())
+    .pipe($.sourcemaps.write('../maps'))
+    .pipe($.gzip())
+    .pipe(gulp.dest(styles.dest));
+});
+gulp.task('styles.watch', ['styles'], function () {
+  gulp.watch(styles.watch, ['styles']);
+});
 
-  gulp.task('styleguide', [
-    'styleguide.styles:watch',
-    'styleguide.server'
-  ], function () {
-    p.util.log('styleguide server localhost:' + port);
-  });
 
-  gulp.task('styleguide.styles', function () {
-    return gulp.src(path.join(styleDir, 'main.less'))
-      .pipe(p.less({paths: [path.join(styleDir, 'inc')]}))
-      .pipe(p.autoprefixer())
-      .pipe(p.combineMediaQueries())
-      .pipe(p.csso())
-      .pipe(gulp.dest(styleDir));
-  });
+var scripts = config.get('build.scripts');
+gulp.task('scripts', function () {
+  return gulp.src(scripts.src)
+    .pipe($.sourcemaps.init())
+      .pipe($.concat(scripts.file))
+      .pipe($.uglify())
+    .pipe($.sourcemaps.write('../maps'))
+    .pipe($.gzip())
+    .pipe(gulp.dest(scripts.dest));
+});
+gulp.task('scripts.watch', ['scripts'], function () {
+  gulp.watch(scripts.watch, ['scripts']);
+});
 
-  gulp.task('styleguide.styles:watch', ['styleguide.styles'], function () {
-    gulp.watch(path.join(styleDir, '**/*.less'), ['styleguide.styles']);
-  });
 
-  gulp.task('styleguide.server', function (done) {
-    var app = express();
-    app.use(express.static(mainDir));
-    app.listen(port, done);
-  });
-
-})(); // END Style Guide Builder/Server
+var content   = config.get('build.content');
+var templates = require('./lib/templates');
+gulp.task('content', function () {
+  return gulp.src(content.src)
+    .pipe($.frontMatter())
+    .pipe($.marked())
+    .pipe($.htmlmin())
+    .pipe($.data(function (file) {
+      file.frontMatter.content = String(file._contents);
+      file._contents = templates[file.frontMatter.template];
+      return file.frontMatter;
+    }))
+    .pipe($.jade())
+    .pipe(gulp.dest(content.dest));
+});
