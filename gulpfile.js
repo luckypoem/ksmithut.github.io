@@ -122,10 +122,7 @@ gulp.task('content', function () {
     .pipe(gulp.dest(content.dest));
 });
 gulp.task('content.watch', ['content'], function () {
-  var src = content.src.concat([
-    'src/templates/**/*.jade'
-  ]);
-  gulp.watch(src, ['content']);
+  gulp.watch([content.src, 'src/templates/**/*.jade'], ['content']);
 });
 
 
