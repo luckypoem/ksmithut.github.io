@@ -1,7 +1,9 @@
 doctype html
 html
   head
-    title #{title} | ksmithut
+    title Posts | Page #{index + 1} | ksmithut
+    link(rel='stylesheet', href=cssPath)
   body
     p Post Template
     main!= content
+    script(src=jsPath)

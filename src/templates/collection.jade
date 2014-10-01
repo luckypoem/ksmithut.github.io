@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title #{title} | Page #{index + 1} | ksmithut
+    link(rel='stylesheet', href=cssPath)
+  body
+    h1 #{title} (Page #{index + 1})
+    p= description
+    ul
+      each item in items
+        li
+          a(href=item.path)= item.title
+    script(src=jsPath)

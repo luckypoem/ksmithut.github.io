@@ -7,5 +7,9 @@
   ],
   "description": "ksmithut's personal blog/portfolio website",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "fastclick": "~1.0.3",
+    "normalize-css": "~3.0.1"
+  }
 }
