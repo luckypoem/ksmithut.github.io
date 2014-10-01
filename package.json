@@ -4,7 +4,8 @@
   "description": "ksmithut's personal blog/portfolio website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "git subtree push --prefix dist origin master"
   },
   "repository": {
     "type": "git",
