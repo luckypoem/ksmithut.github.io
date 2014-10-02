@@ -59,10 +59,13 @@ code {
   background: @black;
   color: @white;
   font-family: @monospace;
-  display: block;
-  overflow-x: auto;
   border-radius: 5px;
-  padding: 16px;
+  padding: 3px 5px;
+  pre & {
+    display: block;
+    overflow-x: auto;
+    padding: 16px;
+  }
 }
 
 blockquote {
@@ -75,6 +78,17 @@ blockquote {
 
 ul, ol {
   padding-left: 20px;
+}
+
+.content {
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 400px;
+    margin: auto;
+    border: 1px solid @gray;
+    border-bottom: 8px solid @gray;
+  }
 }
 
 // Theme
