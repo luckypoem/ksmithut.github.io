@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Starting a blog can be intimidating if you put too much thought into it."><title>Beginnings | ksmithut</title><link rel="stylesheet" href="/css/main.0.0.0.min.css"><link rel="author" href="https://plus.google.com/+KeithSmithUT"><link rel="canonical" href="http://ksmithut.github.io/2014/10/01/beginnings/"></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-55365100-1', 'auto');
+ga('send', 'pageview');</script><header class="page-header"><nav class="container"><ul class="main-nav"><li><a href="/">Home</a></li></ul></nav></header><main class="container"><h1>Beginnings</h1><div class="content"><p>I can&#39;t tell you how many times I&#39;ve started to write a post such as this one.
+I fell into a habit of indecisiveness, and nothing was ever done about it. I had
+my share of inspirational moments when I thought to myself, &quot;I&#39;m just going to
+buckle down and get it done!&quot; but alas, here I am, telling myself the same
+thing.</p>
+<p>It&#39;s not a lack of ability (I don&#39;t think), but rather a lack of deciding, or
+perhaps a lack of settling. Working in a technology field, I wanted by blog to
+be using the latest and greatest with all the bells and whistles. I wanted to
+show off all the stuff that I knew how to do with databases, back-end
+frameworks, and front-end frameworks. It became a nightmare of this <code>TODO</code> item
+that would always have to be redone. So I finally got sick of it all, and
+decided to keep it simple (relatively speaking).</p>
+<p>Before I get too deep into my decision making process, I need to give you some
+context to my decision.</p>
+<h2 id="introductions">Introductions</h2>
+<p>Hi. My name is Keith. I am passionate about the web. I am a consumer of the web,
+much like you, but I also <strong>build</strong> things for the web. I&#39;ve been building
+things ever since I can remember, although back then it was mostly with Legos.
+When asked if I would ever consider going into leadership or leading a
+development team, I often answer that I like to build things too much. That
+isn&#39;t to say that a leader of a development team wouldn&#39;t build stuff, but I
+like getting into the meat of the process and architecture of a project.</p>
+<p>This is perhaps why I had such a hard time deciding on a technology to stick
+with.</p>
+<p>When I first started out in my career, I was pretty much only familiar with
+vanilla PHP and jQuery. I wasn&#39;t going to roll out any custom blog platform
+anytime soon with those skills. So I learned a little WordPress. I probably
+knew enough to start a blog then, but I didn&#39;t want to become one of <em>those</em>
+web developers. There&#39;s nothing wrong with WordPress developers, I just knew
+a lot of developers like this:</p>
+<p><img src="/images/posts/wordpress-all-the-things.png" alt="WordPress all the things" title="WordPress All The Things!"></p>
+<p>As an intern at a digital agency, I was tasked with learning Drupal. They gave
+me a giant book that was the definitive guide to Drupal 7 development. I worked
+on other little side projects while I was &quot;learning&quot; Drupal, but they were
+preparing me for a larger project. If you&#39;ve ever tried to learn Drupal before,
+you&#39;ve probably run into a situation like this:</p>
+<p><img src="/images/posts/cms-drupal-learning-curve.jpg" alt="Drupal learning curve is steep" title="Drupal Learning Curve"></p>
+<p>I too ran into this love-hate relationship with Drupal. However, it was flexible
+enough to accomodate most any need, plus a lot of the agency&#39;s web clients
+specifically asked for Drupal, which is why they needed me to catch on quick.</p>
+<p>Every project, I learned something new and great about Drupal. I was a convert.
+Drupal just seemed like such a good fit for everything, why not my blog? Well,
+I actually started doing it in Drupal, but then I found out that Drupal 8 was
+coming out soon (which at the time of writing this, it still hadn&#39;t come out).
+Any major version upgrade for most CMSs would require a very big restructuring
+because modules/plugins aren&#39;t updated, or the core software now contains some
+of the popular plugins with slightly different APIs. It was going to be a
+nightmare trying to keep up.</p>
+<p>I actually started the development of my blog with a pre-alpha version of
+Drupal. But I got distracted by school, work, and family obligations, so there
+it lived, until I finally deleted the folder that contained my work.</p>
+<h2 id="node-js">Node.js</h2>
+<p>Right before I left work at that agency, I was getting pretty heavy into
+<a href="http://nodejs.org/">node</a>. I instantly fell in love with it. This was a huge
+turning point in my development career/hobby. I&#39;ll likely get more into that in
+a different blog post though.</p>
+<p>Long story short, from then until now, a lot of my free-time has been spent
+developing and maintaining node modules. I know it&#39;s not the fasted platform,
+but it&#39;s fast enough. I&#39;ve actually never used it for any professional projects
+yet, but it&#39;s used in most of my asset build processes.</p>
+<p>I&#39;ve done a ton of <a href="http://gruntjs.com/">grunt</a> and a ton of
+<a href="http://gulpjs.com/">gulp</a>, and a little of a few others. I&#39;ll rant more on
+those at a later time, but it suffices to say that I&#39;m using gulp right now for
+most of my projects.</p>
+<h1 id="here-and-now">Here and now</h1>
+<p>That&#39;s what brings me to now. I&#39;ve decided to build a static site generator (or
+rather a build process) to build my blog/portfolio website. I may change it in
+the future, but for now, it seems like the best pick. It&#39;s all open source, and
+you can view all of the source code
+<a href="https://github.com/ksmithut/ksmithut.github.io">here</a>. You&#39;re welcome to fork
+it, pull request, make your own site, whatever.</p>
+<p>With static site generation, you have no back-end dependency, other than
+an http server. Also, load times can be dramatically improved because you don&#39;t
+have any back-end parsing or processing.</p>
+<p>Another big bonus is that I can host it using github pages, which as long as
+it&#39;s open source, it&#39;s free.</p>
+<p>I&#39;ve also considered using other static site generator type stuff like
+<a href="http://jekyllrb.com/">jekyll</a>, <a href="http://wintersmith.io/">wintersmith</a> or
+<a href="http://www.metalsmith.io/">metalsmith</a>, but I decided against them. Jekyll
+wasn&#39;t really my thing because ruby and I have a very complicated relationship.
+I tried wintersmith and metalsmith, but metalsmith was still in it&#39;s early
+stages and didn&#39;t have the asset pipeline I wanted and wintersmith had a bit of
+a learning curve for me to get used to.</p>
+<p>The process I&#39;m using is custom, but it&#39;s using gulp. Take a look at my
+repo and the gulpfile, and you&#39;ll see what I mean. I still hadn&#39;t completely
+worked everything out in the build process at the time of writing this post, but
+I knew that if I didn&#39;t start writing soon, this would become another abandoned
+project.</p>
+<p>The content is written in
+<a href="http://daringfireball.net/projects/markdown/syntax">markdown</a> with yaml
+<a href="http://assemble.io/docs/YAML-front-matter.html">front matter</a>. I wrote a gulp
+plugin to auto generate paginated &#39;archive&#39;, category, and tag listings. As the
+project develops, I&#39;m sure I&#39;ll add more to it.</p>
+<p>Hopefully this is the beginning of something substantial when it comes to my
+blogging.</p></div></main><script src="/js/main.0.0.0.min.js"></script></body></html>
