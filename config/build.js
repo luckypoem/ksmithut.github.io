@@ -60,9 +60,58 @@ module.exports = {
               totalPages: data.pages.length,
               totalItems: data.collection.length
             };
+            if (data.index === 0) { file.data.path += '1/'; }
             file.contents = templates.collection;
           }
         }
+      }
+    },
+    category: {
+      collectionKey: 'category',
+      mainPath: 'category/[collection].html',
+      pagePath: 'category/[collection]/[page].html',
+      data: function (file, data) {
+        var prettyName = data.name
+          .split('-')
+          .map(function (word) {
+            return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+          })
+          .join(' ');
+        file.data = {
+          title: prettyName,
+          index: data.index,
+          path: data.path.replace('.html', '/'),
+          description: 'Categorized items',
+          items: data.page,
+          totalPages: data.pages.length,
+          totalItems: data.collection.length
+        };
+        if (data.index === 0) { file.data.path += '1/'; }
+        file.contents = templates.collection;
+      }
+    },
+    tags: {
+      collectionKey: 'tags',
+      mainPath: 'tags/[collection].html',
+      pagePath: 'tags/[collection]/[page].html',
+      data: function (file, data) {
+        var prettyName = data.name
+          .split('-')
+          .map(function (word) {
+            return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+          })
+          .join(' ');
+        file.data = {
+          title: prettyName,
+          index: data.index,
+          path: data.path.replace('.html', '/'),
+          description: 'Tagged items',
+          items: data.page,
+          totalPages: data.pages.length,
+          totalItems: data.collection.length
+        };
+        if (data.index === 0) { file.data.path += '1/'; }
+        file.contents = templates.collection;
       }
     }
   }

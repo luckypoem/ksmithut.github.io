@@ -46,7 +46,6 @@ gulp.task('newpost', function (done) {
     gulp.src('src/templates/post.md')
       .pipe($.template(answers))
       .pipe($.rename(slug + '.md'))
-      .pipe($.conflict('./'))
       .pipe(gulp.dest('./content/' + nowPath))
       .on('finish', function () { done(); });
   });
@@ -107,6 +106,8 @@ gulp.task('content', function () {
     .pipe($.htmlmin())
     .pipe($.data(content.process))
     .pipe($.collection(content.collection))
+    .pipe($.collection(content.category))
+    .pipe($.collection(content.tags))
     .pipe($.data(function (file) {
       file.data.cssPath = '/css/' + styles.file;
       file.data.jsPath  = '/js/'  + scripts.file;
