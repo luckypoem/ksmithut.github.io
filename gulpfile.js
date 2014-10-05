@@ -108,12 +108,7 @@ gulp.task('content', function () {
     .pipe($.collection(content.collection))
     .pipe($.collection(content.category))
     .pipe($.collection(content.tags))
-    .pipe($.data(function (file) {
-      file.data.cssPath = '/css/' + styles.file;
-      file.data.jsPath  = '/js/'  + scripts.file;
-      file.data.base    = config.get('build.base');
-      return file.data;
-    }))
+    .pipe($.data(content.data))
     .pipe($.jade())
     .pipe($.rename(function (path) {
       if (path.basename === 'index') { return; }

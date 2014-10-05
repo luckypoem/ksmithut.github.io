@@ -22,7 +22,20 @@ html(lang='en')
         ul.main-nav
           li
             a(href='/') Home
+          li
+            a(href=collections.content.main.posts.path) Blog
     main.container
       h1 ksmithut
       p My site is coming soon! Just working out a build process and such.
+    section.container
+      div.sidebar-section
+        h3 Most Recent Posts
+        ul
+          - n = 0
+          while n < 3
+            - post = collections.content.items.posts[n]
+            if post
+              li
+                a(href=post.path)= post.title
+            - n++
     script(src=jsPath)
