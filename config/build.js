@@ -12,7 +12,9 @@ lib.js  = lib.js  || [];
 
 var templates = require('../lib/templates');
 
-module.exports = {
+var collections = {};
+
+var config = {
   base: 'http://ksmithut.github.io',
   lib: lib,
   styles: {
@@ -64,6 +66,9 @@ module.exports = {
             file.contents = templates.collection;
           }
         }
+      },
+      end: function (collectionData) {
+        collections.content = collectionData;
       }
     },
     category: {
@@ -88,6 +93,9 @@ module.exports = {
         };
         if (data.index === 0) { file.data.path += '1/'; }
         file.contents = templates.collection;
+      },
+      end: function (collectionData) {
+        collections.categories = collectionData;
       }
     },
     tags: {
@@ -112,10 +120,22 @@ module.exports = {
         };
         if (data.index === 0) { file.data.path += '1/'; }
         file.contents = templates.collection;
+      },
+      end: function (collectionData) {
+        collections.tags = collectionData;
       }
+    },
+    data: function (file) {
+      file.data.cssPath     = '/css/' + config.styles.file;
+      file.data.jsPath      = '/js/'  + config.scripts.file;
+      file.data.base        = config.base;
+      file.data.collections = collections;
+      return file.data;
     }
   }
 };
+
+module.exports = config;
 
 function convertTags(tags) {
   if (!tags) { return []; }
