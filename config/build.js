@@ -10,6 +10,17 @@ var root    = path.resolve(__dirname, '../');
 lib.css = lib.css || [];
 lib.js  = lib.js  || [];
 
+/*
+var toRemove = ['jquery.js', 'bootstrap.js'];
+lib.js = lib.js.filter(function (item) {
+  var keepItem = true;
+  toRemove.map(function (remove) {
+    keepItem = keepItem && item.indexOf(remove) === -1;
+  });
+  return keepItem;
+});
+// */
+
 var templates = require('../lib/templates');
 
 var collections = {};
