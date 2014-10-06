@@ -32,20 +32,30 @@ html(lang='en')
     .jumbotron
       .container
         h1 Hi. I'm Keith.
-        p This is the place where I log my rants, the stuff I learn, and the things I experience.
+        p This is the place where I log my rants and the stuff I learn
 
     section.container
-      div.sidebar-section
-        h3 Most Recent Posts
-        .list-group
-          - n = 0, maxPosts = 5
-          while n < maxPosts
-            - post = collections.content.items.posts[n]
-            if post
-              a.list-group-item(href=post.path)
-                h4= post.title
-                p= post.description
-            - n++
+      .row
+        .col-md-6
+          h3 Most Recent Posts
+          .list-group
+            - n = 0, maxPosts = 5
+            while n < maxPosts
+              - post = collections.content.items.posts[n++]
+              if post
+                a.list-group-item(href=post.path)
+                  h4= post.title
+                    | &nbsp;
+                    span.label.label-default #{post.date.getDate()}/#{post.date.getMonth() + 1}/#{post.date.getFullYear()}
+                  p= post.description
+        .col-md-6
+          h3 Categories
+          .list-group
+            each category, categoryName in collections.categories.main
+              a.list-group-item(href=category.path)
+                h4= category.title
+                  | &nbsp;
+                  span.badge= category.items.length
 
     .footer.inverse
       .container

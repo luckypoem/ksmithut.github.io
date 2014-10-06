@@ -89,7 +89,7 @@ I've done a ton of [grunt](http://gruntjs.com/) and a ton of
 those at a later time, but it suffices to say that I'm using gulp right now for
 most of my projects.
 
-# Here and now
+## Here and now
 
 That's what brings me to now. I've decided to build a static site generator (or
 rather a build process) to build my blog/portfolio website. I may change it in

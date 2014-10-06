@@ -67,7 +67,7 @@ var config = {
             file.data = {
               title: 'Web Logs',
               index: data.index,
-              path: data.path.replace('.html', '/'),
+              path: '/' + data.path.replace('.html', '/'),
               description: 'Log all the things.',
               items: data.page,
               totalPages: data.pages.length,
@@ -96,7 +96,7 @@ var config = {
         file.data = {
           title: prettyName,
           index: data.index,
-          path: data.path.replace('.html', '/'),
+          path: '/' + data.path.replace('.html', '/'),
           description: 'Categorized items',
           items: data.page,
           totalPages: data.pages.length,
@@ -123,7 +123,7 @@ var config = {
         file.data = {
           title: prettyName,
           index: data.index,
-          path: data.path.replace('.html', '/'),
+          path: '/' + data.path.replace('.html', '/'),
           description: 'Tagged items',
           items: data.page,
           totalPages: data.pages.length,
