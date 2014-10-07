@@ -26,6 +26,9 @@ var templates = require('../lib/templates');
 var collections = {};
 
 var config = {
+  resetTemplates: function () {
+    templates = require('../lib/templates');
+  },
   base: 'http://ksmithut.github.io',
   lib: lib,
   styles: {

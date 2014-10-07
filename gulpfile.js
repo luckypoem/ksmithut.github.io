@@ -99,7 +99,7 @@ gulp.task('static.watch', ['static'], function () {
 // gulp content
 // ============
 var content = config.get('build.content');
-gulp.task('content', function () {
+function contentTask() {
   return gulp.src(content.src)
     .pipe($.frontMatter({property: 'data'}))
     .pipe($.markdown())
@@ -116,9 +116,16 @@ gulp.task('content', function () {
       path.basename = 'index';
     }))
     .pipe(gulp.dest(content.dest));
+}
+gulp.task('content', contentTask);
+gulp.task('reset-templates', function () {
+  delete require.cache[require.resolve('./lib/templates')];
+  config.get('build.resetTemplates')();
+  return contentTask();
 });
 gulp.task('content.watch', ['content'], function () {
-  gulp.watch([content.src, 'src/templates/**/*.jade'], ['content']);
+  gulp.watch(content.src, ['content']);
+  gulp.watch('src/templates/**/*.jade', ['reset-templates']);
 });
 
 
