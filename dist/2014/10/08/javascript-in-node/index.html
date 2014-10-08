@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Using JavaScript in Node is much different than in the Browser. Here we'll discuss the differences and similarities."><title>JavaScript in Node | ksmithut</title><link rel="stylesheet" href="/css/main.0.0.0.min.css"><link rel="author" href="https://plus.google.com/+KeithSmithUT"><link rel="canonical" href="http://ksmithut.github.io/2014/10/08/javascript-in-node/"></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-55543605-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+</script><div role="navigation" class="navbar navbar-inverse"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle collapsed"><span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">ksmithut</a></div><div class="navbar-collapse collapse"><nav><ul class="nav navbar-nav"><li><a href="/posts/1/">Blog</a></li></ul></nav></div></div></div><section class="container"><div class="page-header"><h1>JavaScript in Node</h1></div><div class="content"><p>If you&#39;re a long time user of jQuery, and don&#39;t know much vanilla JavaScript,
+you&#39;ll likely be asking yourself, &quot;Why would I want to run JavaScript in a
+non-browser environment?&quot; For those of you that fit in that boat and ask that
+question, you&#39;ll likely want to learn a bit more about JavaScript before
+continuing.</p>
+<p>Before continuing, you should have node installed on your machine. If you
+haven&#39;t installed it yet, you can follow the instructions in my
+<a href="&#39;/2014/10/07/installing-node/&#39;">previous post</a> to install node.</p>
+<h2 id="node-s-repl">Node&#39;s REPL</h2>
+<p>Before we create any JavaScript files to play around with, let&#39;s play around
+a little bit in Node&#39;s REPL (Read-Eval-Print Loop), which is just a place where
+we can toy around with JavaScript in a command-line interface.</p>
+<p>Start by just entering <code>node</code> into the terminal or command-line and pressing
+<code>[enter]</code>. You&#39;re going to see something like this in the output:</p>
+<pre><code class="lang-bash">$ node
+&gt;
+</code></pre>
+<p>The <code>&gt;</code> is waiting for input. Now type <code>5</code> and press <code>[enter]</code>:</p>
+<pre><code class="lang-bash">&gt; 5
+5
+&gt;
+</code></pre>
+<p>The stuff that appears before the line you entered is the return value of the
+expression, as well as anything that gets logged out with stdout (console.log).</p>
+<p>Now type <code>var test = 5;</code>. It will print out <code>undefined</code> because the expression
+you typed has no return value. Now type <code>test</code>. Now you should get <code>5</code> printed
+out.</p>
+<pre><code class="lang-bash">&gt; var test = 5;
+undefined
+&gt; test
+5
+&gt;
+</code></pre>
+<p>You can also put in functions:</p>
+<pre><code class="lang-bash">&gt; function add(a, b) { return a + b; }
+undefined
+&gt; add(4, 7)
+11
+&gt;
+</code></pre>
+<p>Fun right? I sometimes find it faster to open this up instead of my system&#39;s
+calculator.</p>
+<h2 id="javascript-in-node">JavaScript in Node</h2>
+<p>JavaScript in Node is in a different environment, and has a different way of
+loading dependencies and files. There&#39;s no HTML, CSS, or <code>document.onReady</code>
+event. Node starts by loading up a single javascript file.</p>
+<p>Start by creating a file called <code>index.js</code>. You can do this in your preferred
+code editor, or use the <code>touch</code> command to create an empty file:</p>
+<pre><code class="lang-bash">touch index.js
+</code></pre>
+<p>Next, open up your file, and you can now unleash JavaScript!</p>
+<pre><code class="lang-javascript">// index.js
+var truthy = true;
+
+if (truthy) {
+  console.log(&#39;truth!&#39;);
+} else {
+  console.log(&#39;falsehood!&#39;);
+}
+</code></pre>
+<p>After you&#39;ve saved your <code>index.js</code> file, run <code>node index</code> or <code>node index.js</code> to
+run the file.</p>
+<pre><code class="lang-bash">$ node index
+truth!
+</code></pre>
+<h3 id="commonjs">CommonJS</h3>
+<p>There are many types of package types when it comes to JavaScript. I&#39;ll likely
+go over all of them in greater detail in a later post, but I&#39;ll mention them
+here for completion:</p>
+<ul>
+<li><p>AMD (Asynchronous Module Definition) - A way of loading modules asynchronously
+and only when required by another module. Very useful for only loading modules
+on web pages that need them.</p>
+</li>
+<li><p>ES6 (Ecmascript 6 Modules) - Ecmascript 6 will have it&#39;s own way of injecting
+dependencies, which will be really nice in the browser once it&#39;s been fully
+adopted.
+<a href="http://www.2ality.com/2014/09/es6-modules-final.html">Syntax for es6 module definitions</a></p>
+</li>
+<li><p>Globals - This is what is typically used in the browser. jQuery exposes a
+<code>jQuery</code> and a <code>$</code> variable which can then be used. The caveat is that the
+jQuery library must be loaded before you can actually use it.</p>
+</li>
+<li><p>CommonJS - This is what is used by Node. That isn&#39;t to say you couldn&#39;t use
+the others, but it&#39;s probably just simpler to use what is packaged with node.
+It exposes a global function called <code>require</code> which allows you to bring in an
+exported module into another one. It also keeps a cache of the file so that it
+only gets called once, no matter how many times a module is &#39;required&#39;.</p>
+</li>
+</ul>
+<p>The best way to understand CommonJS is to put it into action.</p>
+<p>Working from our <code>index.js</code> file, let&#39;s create another file called <code>truthy.js</code>
+and put it in the same directory as <code>index.js</code>.</p>
+<pre><code class="lang-javascript">// truthy.js
+module.exports = true;
+</code></pre>
+<p>Now in your <code>index.js</code>, change it to look like this:</p>
+<pre><code class="lang-javascript">// index.js
+var truthy = require(&#39;./truthy&#39;);
+
+if (truthy) {
+  console.log(&#39;truth!&#39;);
+} else {
+  console.log(&#39;falsehood!&#39;);
+}
+</code></pre>
+<p>Notice the <code>module.exports</code>? That (along with a few others) is a variable that
+is exposed when the file gets loaded. The execution happens like this:</p>
+<p>When you run <code>node index</code>, it&#39;s going to parse the file and start execution. It
+reads <code>var truthy = require(&#39;./truthy&#39;);</code>. When it sees the function call to
+<code>require()</code>, require will read the file <code>./truthy.js</code> which is relative to the
+<code>index.js</code> file. It will then parse and execute that file. It exposes the
+<code>module</code> object, and anything you attach to <code>module.exports</code> is what gets
+returned as the module. You can also use the exposed <code>exports</code>, which is just a
+shortcut to the same object. So <code>./truth.js</code> exports as a boolean, <code>true</code>, which
+gets thrown into the <code>truthy</code> variable in our <code>index.js</code>. Then it goes through
+the <code>if</code> statement and <code>console.log</code>s out whatever we want.</p>
+<p>Notice that I didn&#39;t use the file extension when I used <code>require(&#39;./truthy&#39;)</code>.
+You certainly can, but you don&#39;t have to. Node will automatically parse <code>.js</code>
+files as well as <code>.json</code> files that don&#39;t have an extension.</p>
+<p>That should be enough to get you started. Next we&#39;ll go over NPM and how to
+bring in 3rd party module.</p></div></section><div class="footer inverse"><div class="container"><p>&copy; Keith Smith 2014</p></div></div><script src="/js/main.0.0.0.min.js"></script></body></html>

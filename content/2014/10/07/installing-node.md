@@ -6,6 +6,7 @@ collection: posts
 date: 07 Oct 2014
 category: development
 tags: node, javascript
+next: /2014/10/08/javascript-in-node/
 ---
 
 [Node.js](http://nodejs.org/) is a development platform built on Google's V8
