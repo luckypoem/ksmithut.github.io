@@ -5,6 +5,7 @@ var path     = require('path');
 var $        = require('gulp-load-plugins')();
 var config   = require('configly').setConfig(path.join(__dirname, 'config'));
 $.collection = require('./lib/collection');
+$.jadeIncludes = require('./lib/jade-includes');
 
 
 gulp.task('default', ['watch']);
@@ -109,6 +110,9 @@ function contentTask() {
     .pipe($.collection(content.category))
     .pipe($.collection(content.tags))
     .pipe($.data(content.data))
+    .pipe($.jadeIncludes({
+      path: __dirname + '/src/templates/inc'
+    }))
     .pipe($.jade())
     .pipe($.rename(function (path) {
       if (path.basename === 'index') { return; }
@@ -138,8 +142,8 @@ gulp.task('server', function(done) {
     .listen(8000, done);
 });
 gulp.task('server.watch', ['server'], function() {
-  var server = $.livereload();
-  gulp.watch('dist/**').on('change', function(file) {
+  var server = $.livereload({ silent: true });
+  var test = gulp.watch('dist/**/*').on('change', function (file) {
     server.changed(file.path);
   });
 });
