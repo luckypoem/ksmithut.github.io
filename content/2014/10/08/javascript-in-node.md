@@ -5,8 +5,9 @@ template: post
 collection: posts
 date: 08 Oct 2014
 category: development
-tags: javascript
+tags: node, javascript
 prev: /2014/10/07/installing-node/
+next: /2014/10/09/getting-started-with-npm/
 ---
 
 If you're a long time user of jQuery, and don't know much vanilla JavaScript,
