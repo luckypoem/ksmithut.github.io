@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="When beginning Node.js development, it's important to understand package management. npm is the de facto way of managing dependencies for Node.js projects."><title>Getting Started with npm | ksmithut</title><link rel="stylesheet" href="/css/main.0.0.0.min.css"><link rel="author" href="https://plus.google.com/+KeithSmithUT"><link rel="canonical" href="http://ksmithut.github.io/2014/10/09/getting-started-with-npm/"></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-55543605-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+</script><div role="navigation" class="navbar navbar-inverse"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle collapsed"><span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">ksmithut</a></div><div class="navbar-collapse collapse"><nav><ul class="nav navbar-nav"><li><a href="/posts/1/">Blog</a></li></ul></nav></div></div></div><section class="container"><div class="page-header"><h1>Getting Started with npm</h1></div><div class="content"><p>If you&#39;ve gone through the <a href="/2014/10/08/javascript-in-node/">previous post</a>, You
+should have a basic understanding of how <code>require()</code> works. We&#39;ll expand on it a
+little, but it will integrate very well with <a href="https://www.npmjs.org/"><code>npm</code></a>.
+<code>npm</code> stands for Node Package Manager. It is a node module that comes packaged
+with node when you install it. It is a global module, meaning that it is
+installed as a CLI. If you have node installed, it should come with it, so no
+additional install steps are needed.</p>
+<p>You can install a node package locally by using the <code>npm install</code> command.
+You&#39;ll need to know the name of a package you want to install, first. Create an
+empty directory somewhere, and navigate to it using the terminal. Then run this
+command:</p>
+<pre><code class="lang-bash">npm install request
+</code></pre>
+<p>What it&#39;s doing is looking at <code>npm</code>&#39;s package registry for a package named
+<code>request</code>. It will look for the latest version, then download it to your
+computer. After it&#39;s done, you&#39;ll notice that it created a folder called
+<code>node_modules/</code> in the directory you just created. If you look in there, there
+will be another folder called <code>request/</code>. In there are a whole bunch of other
+files, including a <code>package.json</code> file, and another <code>node_modules/</code> directory.
+The <code>request</code> package has it&#39;s own dependencies, which npm installed for it as
+well. The package didn&#39;t (or shouldn&#39;t) include the dependencies explicitly,
+they should be automatically downloaded through npm.</p>
+<h2 id="package-json">package.json</h2>
+<p>To keep track of dependencies you&#39;re using for a project, you should also use a
+<code>package.json</code> file. You could look at an example one to build yours out, or you
+can use npm to create one for you.</p>
+<p>To create a <code>package.json</code> file using <code>npm</code>, run the following command:</p>
+<pre><code class="lang-bash">npm init
+</code></pre>
+<p>This will run you through a series of prompts to help build out your
+package.json.</p>
+<p>You don&#39;t really need to worry about what you put in here, because you can just
+edit the file later. <code>npm init</code> gives you a pretty good start to your file, but
+it doesn&#39;t utilize all of the options. You can <a href="https://www.npmjs.org/doc/files/package.json.html">view all of the package.json
+options here</a>.</p>
+<p>Once you have a package.json, you can &#39;save&#39; dependencies to your package. To do
+this, use the <code>--save</code> flag when you run <code>npm install</code>. For example:</p>
+<pre><code class="lang-bash">npm install request --save
+</code></pre>
+<p>Will download the request package into <code>node_modules/request/</code> just as before,
+but now if you look in your <code>package.json</code>, you will see a new property:
+&quot;dependencies&quot;.</p>
+<p>This is where your saved dependencies are referenced by npm. For the sake of
+demonstration, delete your <code>node_modules/</code> directory. Now run:</p>
+<pre><code class="lang-bash">npm install
+</code></pre>
+<p>Notice that we&#39;re not putting the package name or anything there. <code>npm install</code>
+by default will look at the <code>package.json</code> in your current working directory and
+read the &quot;dependencies&quot; property and install all of those packages. Your
+<code>node_modules/</code> directory is fully restored! Now you can add <code>node_modules/</code> to
+your <code>.gitignore</code> file (in a later post, I&#39;ll discuss situation where you might
+actually want to commit your node_modules directory).</p>
+<p>In the next post, I&#39;ll discuss how to keep track of your development
+dependencies.</p></div></section><div class="footer inverse"><div class="container"><p>&copy; Keith Smith 2014</p></div></div><script src="/js/main.0.0.0.min.js"></script></body></html>
