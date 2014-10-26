@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ksmithut/ksmithut.github.io",
   "devDependencies": {},
   "dependencies": {
-    "react": "^0.11.2"
+    "react": "^0.11.2",
+    "url-pattern": "^0.6.0"
   }
 }
