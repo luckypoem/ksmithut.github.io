@@ -1,23 +1,14 @@
 /** @jsx React.DOM */
-'use strict';
+'use strict'
 
 var React = require('react');
 
-var View = React.createClass({
-  propTypes: {
-    html5: React.PropTypes.bool
-  },
-  getDefaultProps: function () {
-    return {
-      html5: false,
-      base: '/'
-    };
-  },
-  getInitialState: function () {
-    return {
-      path: '/'
-    };
-  },
+var Home = React.createClass({
+  // mixins: [],
+  // propTypes: {},
+  // statics: {},
+  // getDefaultProps: function () { return {}; },
+  // getInitialState: function () { return {}; },
   // componentWillMount: function () {},
   // componentDidMount: function () {},
   // componentWillReceiveProps: function () {},
@@ -27,9 +18,9 @@ var View = React.createClass({
   // componentWillUnmount: function () {},
   render: function () {
     return (
-      <div className='myClass'></div>
+      <h1>Home</h1>
     );
   }
 });
 
-module.exports = View;
+module.exports = Home;
