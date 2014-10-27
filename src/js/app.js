@@ -1,21 +1,17 @@
 /** @jsx React.DOM */
-'use strict'
+'use strict';
 
-var React = require('react');
+var React  = require('react');
+var Header = require('./components/header');
+var Footer = require('./components/footer');
 
 var App = React.createClass({
   render: function () {
     return (
       <div>
-        <header>
-          <span>ksmithut</span>
-        </header>
-
+        <Header />
         <this.props.activeRouteHandler />
-
-        <footer>
-          <span>{'\u00a9 Keith Smith 2014'}</span>
-        </footer>
+        <Footer />
       </div>
     );
   }

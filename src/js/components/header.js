@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
-'use strict'
+'use strict';
 
-var React = require('react');
+var React      = require('react');
+var Link       = require('react-router').Link;
+var Navigation = require('./navigation');
 
-var Home = React.createClass({
+var Header = React.createClass({
   // mixins: [],
   // propTypes: {},
   // statics: {},
@@ -18,9 +20,12 @@ var Home = React.createClass({
   // componentWillUnmount: function () {},
   render: function () {
     return (
-      <h1>Home</h1>
+      <header>
+        <Link to="home">ksmithut</Link>
+        <Navigation />
+      </header>
     );
   }
 });
 
-module.exports = Home;
+module.exports = Header;

@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-'use strict'
+'use strict';
 
 var Router        = require('react-router');
 var Route         = Router.Route;
@@ -9,12 +9,14 @@ var DefaultRoute  = Router.DefaultRoute;
 var Link          = Router.Link;
 
 var App           = require('./app');
-var Home          = require('./home');
+var Home          = require('./pages/home');
+var Contact       = require('./pages/contact');
 
 module.exports = (
   <Routes location="history">
-    <Route name="app" path="/" handler={App}>
-      <DefaultRoute handler={Home} />
+    <Route path="/" handler={App}>
+      <Route path="/" name="home" handler={Home} />
+      <Route path="/contact/" name="contact" handler={Contact} />
     </Route>
   </Routes>
 );

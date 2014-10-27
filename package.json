@@ -4,7 +4,8 @@
   "description": "ksmithut's personal blog/portfolio website",
   "main": "index.js",
   "scripts": {
-    "deploy": "git subtree push --prefix dist origin master"
+    "deploy": "git subtree push --prefix dist origin master",
+    "build": "jsx --executable node src/js/render.js"
   },
   "repository": {
     "type": "git",
@@ -22,13 +23,16 @@
     "gulp": "^3.8.9",
     "gulp-load-plugins": "^0.7.0",
     "gulp-uglify": "^1.0.1",
+    "mkdirp": "^0.5.0",
+    "node-jsx": "^0.11.0",
+    "react-document-title": "^0.1.2",
+    "react-tools": "^0.11.2",
     "reactify": "^0.14.0",
     "uglifyify": "^2.5.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
-    "flux": "^2.0.1",
     "react": "^0.11.2",
     "react-router": "^0.9.4"
   }

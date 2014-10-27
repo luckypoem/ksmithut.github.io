@@ -18,3 +18,13 @@ gulp.task('js', function () {
     .pipe($.uglify())
     .pipe(gulp.dest('dist/js'));
 });
+
+gulp.task('html', function (done) {
+  require('node-jsx').install();
+  require('./src/js/render')({
+    '/': 'index.html',
+    '/contact/': 'contact/index.html'
+  }, function (err) {
+    done(err);
+  });
+});
