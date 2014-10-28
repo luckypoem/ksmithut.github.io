@@ -1,15 +1,12 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React         = require('react');
-var DocumentTitle = require('react-document-title');
+var React = require('react');
 
 var Home = React.createClass({
   render: function () {
     return (
-      <DocumentTitle title="Contact">
-        <h1>Home</h1>
-      </DocumentTitle>
+      <h1>Home</h1>
     );
   }
 });

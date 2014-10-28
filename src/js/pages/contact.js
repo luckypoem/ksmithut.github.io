@@ -7,9 +7,7 @@ var DocumentTitle = require('react-document-title');
 var Home = React.createClass({
   render: function () {
     return (
-      <DocumentTitle title="Contact">
-        <h1>Contact</h1>
-      </DocumentTitle>
+      <h1>Contact</h1>
     );
   }
 });
