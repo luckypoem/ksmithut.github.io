@@ -1,149 +1,105 @@
 'use strict';
 
-var gulp     = require('gulp');
-var path     = require('path');
-var $        = require('gulp-load-plugins')();
-var config   = require('configly').setConfig(path.join(__dirname, 'config'));
-$.collection = require('./lib/collection');
-$.jadeIncludes = require('./lib/jade-includes');
+var gulp   = require('gulp');
+var lib    = require('bower-files')();
+var $      = require('./lib/gulp-plugins');
+var m      = require('./lib/metalsmith-plugins');
+var config = require('./config');
+var pkg    = require('./package');
+var dist   = 'dist/';
 
-
-gulp.task('default', ['watch']);
-
-
-// gulp build
-// ==========
+// BUILD
+// =====
 gulp.task('build', [
-  'styles',
+  'assets',
   'scripts',
-  'static',
+  'styles',
   'content'
 ]);
 
-
-// gulp watch
-// ==========
+// WATCH
+// =====
 gulp.task('watch', [
-  'styles.watch',
+  'assets.watch',
   'scripts.watch',
-  'static.watch',
-  'content.watch',
-  'server.watch'
+  'styles.watch',
+  'content.watch'
 ]);
 
-
-// gulp newpost
-// ============
-var inquirer = require('inquirer');
-var moment   = require('moment');
-gulp.task('newpost', function (done) {
-  inquirer.prompt([
-    { type: 'input', name: 'title', message: 'Title' }
-  ], function (answers) {
-    var now = moment();
-    answers.date = now.format('DD MMM YYYY');
-    var nowPath = now.format('YYYY/MM/DD');
-    var slug = answers.title.toLowerCase().replace(/ /g, '-');
-    gulp.src('src/templates/post.md')
-      .pipe($.template(answers))
-      .pipe($.rename(slug + '.md'))
-      .pipe(gulp.dest('./content/' + nowPath))
-      .on('finish', function () { done(); });
-  });
+// ASSETS
+// ======
+gulp.task('assets', function () {
+  return gulp.src(config.assets.src)
+    .pipe($.plumber())
+    .pipe(gulp.dest(dist + config.assets.dest));
+});
+gulp.task('assets.watch', ['assets'], function () {
+  gulp.watch(config.assets.src, ['assets']);
 });
 
-
-// gulp styles
-// ===========
-var styles = config.get('build.styles');
-gulp.task('styles', function () {
-  return gulp.src(styles.src)
-    .pipe($.sourcemaps.init())
-      .pipe($.concat(styles.file))
-      .pipe($.less({ paths: styles.inc }))
-      .pipe($.pleeease())
-    .pipe($.sourcemaps.write('../maps'))
-    .pipe(gulp.dest(styles.dest));
-});
-gulp.task('styles.watch', ['styles'], function () {
-  gulp.watch(styles.watch, ['styles']);
-});
-
-
-// gulp scripts
-// ============
-var scripts = config.get('build.scripts');
+// SCRIPTS
+// =======
 gulp.task('scripts', function () {
-  return gulp.src(scripts.src)
+  return gulp.src((lib.js || []).concat(config.scripts.src))
+    .pipe($.plumber())
     .pipe($.sourcemaps.init())
-      .pipe($.concat(scripts.file))
+      .pipe($.concat('app-' + pkg.version + '.min.js'))
       .pipe($.uglify())
     .pipe($.sourcemaps.write('../maps'))
-    .pipe(gulp.dest(scripts.dest));
+    .pipe(gulp.dest(dist + config.scripts.dest));
 });
 gulp.task('scripts.watch', ['scripts'], function () {
-  gulp.watch(scripts.watch, ['scripts']);
+  gulp.watch(config.scripts.src, ['scripts']);
 });
 
-
-// gulp static
-// ===========
-var assets = config.get('build.static');
-gulp.task('static', function () {
-  return gulp.src(assets.src).pipe(gulp.dest(assets.dest));
+// STYLES
+// ======
+gulp.task('styles', function () {
+  return gulp.src((lib.css || []).concat(config.styles.src))
+    .pipe($.plumber())
+    .pipe($.stylus(config.styles.stylus))
+    .pipe($.sourcemaps.init({loadMaps: true}))
+      .pipe($.concat('app-' + pkg.version + '.min.css'))
+      .pipe($.pleeease())
+    .pipe($.sourcemaps.write('../maps'))
+    .pipe(gulp.dest(dist + config.styles.dest));
 });
-gulp.task('static.watch', ['static'], function () {
-  gulp.watch(assets.src, ['static']);
+gulp.task('styles.watch', ['styles'], function () {
+  gulp.watch(config.styles.src, ['styles']);
 });
 
-
-// gulp content
-// ============
-var content = config.get('build.content');
-function contentTask() {
-  return gulp.src(content.src)
-    .pipe($.frontMatter({property: 'data'}))
-    .pipe($.markdown())
-    .pipe($.htmlmin())
-    .pipe($.data(content.process))
-    .pipe($.collection(content.collection))
-    .pipe($.collection(content.category))
-    .pipe($.collection(content.tags))
-    .pipe($.data(content.data))
-    .pipe($.jadeIncludes({
-      path: __dirname + '/src/templates/inc'
-    }))
-    .pipe($.jade())
-    .pipe($.rename(function (path) {
-      if (path.basename === 'index') { return; }
-      path.dirname += '/' + path.basename;
-      path.basename = 'index';
-    }))
-    .pipe(gulp.dest(content.dest));
-}
-gulp.task('content', contentTask);
-gulp.task('reset-templates', function () {
-  delete require.cache[require.resolve('./lib/templates')];
-  config.get('build.resetTemplates')();
-  return contentTask();
+// CONTENT
+// =======
+gulp.task('content', function () {
+  return gulp.src(config.content.src)
+    .pipe($.plumber())
+    .pipe($.frontMatter())
+    .on('data', config.content.frontMatterCopy)
+    .pipe($.metalsmith()
+      .metadata({
+        jsFile: '/js/app-' + pkg.version + '.min.js',
+        cssFile: '/css/app-' + pkg.version + '.min.css',
+        baseUrl: 'http://ksmithut.github.io'
+      })
+      .use(m.drafts())
+      .use(m.globMeta({
+        glob: 'blog/**/*.md',
+        meta: {
+          template: 'post.hbs'
+        }
+      }))
+      .use(m.markdown(config.content.markdown))
+      .use(m.excerpts())
+      .use(m.permalinks(config.content.permalinks))
+      .use(m.buildDate())
+      .use(m.collections(config.content.collections))
+      .use(m.collectionsPaginate(config.content.collectionsPaginate))
+      .use(m.collectionsTitles(config.content.collectionsTitles))
+      .use(m.templates(config.content.templates))
+    )
+    .pipe($.minifyHtml())
+    .pipe(gulp.dest(dist + config.content.dest));
 });
 gulp.task('content.watch', ['content'], function () {
-  gulp.watch(content.src, ['content']);
-  gulp.watch('src/templates/**/*.jade', ['reset-templates']);
-});
-
-
-// gulp server
-// ===========
-gulp.task('server', function(done) {
-  var connect = require('connect');
-  connect()
-    .use(require('serve-static')('dist'))
-    .listen(8000, done);
-});
-gulp.task('server.watch', ['server'], function() {
-  var server = $.livereload({ silent: true });
-  var test = gulp.watch('dist/**/*').on('change', function (file) {
-    server.changed(file.path);
-  });
+  gulp.watch([config.content.src, 'src/templates/**/*.hbs'], ['content']);
 });
