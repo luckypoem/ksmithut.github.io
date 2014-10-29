@@ -82,12 +82,8 @@ gulp.task('content', function () {
         baseUrl: 'http://ksmithut.github.io'
       })
       .use(m.drafts())
-      .use(m.globMeta({
-        glob: 'blog/**/*.md',
-        meta: {
-          template: 'post.hbs'
-        }
-      }))
+      .use(m.globMeta(config.content.globMeta[0]))
+      .use(m.globMeta(config.content.globMeta[1]))
       .use(m.markdown(config.content.markdown))
       .use(m.excerpts())
       .use(m.permalinks(config.content.permalinks))

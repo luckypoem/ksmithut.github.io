@@ -11,13 +11,23 @@ module.exports = {
     });
     delete file.frontMatter;
   },
+  globMeta: [
+    {
+      glob: 'blog/**/*.md',
+      meta: { template: 'post.hbs' }
+    },
+    {
+      glob: 'projects/**/*.md',
+      meta: { template: 'project.hbs' }
+    }
+  ],
   markdown: {
     smartypants: true,
     gfm: true,
     tables: true
   },
   permalinks: {
-    pattern: ':path'
+    pattern: ':path/'
   },
   collections: {
     posts: {
@@ -54,7 +64,8 @@ module.exports = {
     directory: 'src/templates',
     partials: {
       footer: 'partials/footer',
-      header: 'partials/header'
+      header: 'partials/header',
+      pagination: 'partials/pagination'
     }
   }
 };

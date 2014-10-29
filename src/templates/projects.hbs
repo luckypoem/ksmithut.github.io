@@ -5,12 +5,7 @@
     <li><a href="{{cleanUrl path}}">{{title}}</a></li>
   {{/each}}
 </ul>
-<ul>
-  <li><a {{#if paginate.previous}}href="{{cleanUrl paginate.previous.path}}"{{/if}}>Previous</a></li>
-  {{#each paginate.pages}}
-    <li><a {{#unless (same paginate.num ../paginate.num)}}href="{{cleanUrl path}}"{{/unless}}>{{paginate.num}}</a></li>
-  {{/each}}
-  <li><a {{#if paginate.next}}href="{{cleanUrl paginate.next.path}}"{{/if}}>Next</a></li>
-</ul>
+
+{{>pagination}}
 
 {{>footer}}
