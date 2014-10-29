@@ -1,15 +1,17 @@
 'use strict';
 
-var gulp   = require('gulp');
-var lib    = require('bower-files')();
-var $      = require('./lib/gulp-plugins');
-var m      = require('./lib/metalsmith-plugins');
-var config = require('./config');
-var pkg    = require('./package');
-var dist   = 'dist/';
+var gulp    = require('gulp');
+var lib     = require('bower-files')();
+var $       = require('./lib/gulp-plugins');
+var m       = require('./lib/metalsmith-plugins');
+var pkg     = require('./package');
+var dist    = 'dist/';
 
+gulp.task('default', ['watch']);
+
+// ============================================================================
 // BUILD
-// =====
+// ============================================================================
 gulp.task('build', [
   'assets',
   'scripts',
@@ -17,64 +19,78 @@ gulp.task('build', [
   'content'
 ]);
 
+// ============================================================================
 // WATCH
-// =====
+// ============================================================================
 gulp.task('watch', [
   'assets.watch',
   'scripts.watch',
   'styles.watch',
-  'content.watch'
+  'content.watch',
+  'server'
 ]);
 
+// ============================================================================
 // ASSETS
-// ======
+// ============================================================================
 gulp.task('assets', function () {
-  return gulp.src(config.assets.src)
+  return gulp.src('src/assets/**')
     .pipe($.plumber())
-    .pipe(gulp.dest(dist + config.assets.dest));
+    .pipe(gulp.dest(dist));
 });
 gulp.task('assets.watch', ['assets'], function () {
-  gulp.watch(config.assets.src, ['assets']);
+  gulp.watch('src/assets/**', ['assets']);
 });
 
+// ============================================================================
 // SCRIPTS
-// =======
+// ============================================================================
 gulp.task('scripts', function () {
-  return gulp.src((lib.js || []).concat(config.scripts.src))
+  return gulp.src((lib.js || []).concat('src/scripts/**/*.js'))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
       .pipe($.concat('app-' + pkg.version + '.min.js'))
       .pipe($.uglify())
     .pipe($.sourcemaps.write('../maps'))
-    .pipe(gulp.dest(dist + config.scripts.dest));
+    .pipe(gulp.dest(dist + 'js'));
 });
 gulp.task('scripts.watch', ['scripts'], function () {
-  gulp.watch(config.scripts.src, ['scripts']);
+  gulp.watch('src/scripts/**/*.js', ['scripts']);
 });
 
+// ============================================================================
 // STYLES
-// ======
+// ============================================================================
 gulp.task('styles', function () {
-  return gulp.src((lib.css || []).concat(config.styles.src))
+  return gulp.src((lib.css || []).concat('src/styles/**/*.styl'))
     .pipe($.plumber())
-    .pipe($.stylus(config.styles.stylus))
+    .pipe($.stylus({
+      use: [require('nib')()],
+      sourcemap: {inline: true}
+    }))
     .pipe($.sourcemaps.init({loadMaps: true}))
       .pipe($.concat('app-' + pkg.version + '.min.css'))
       .pipe($.pleeease())
     .pipe($.sourcemaps.write('../maps'))
-    .pipe(gulp.dest(dist + config.styles.dest));
+    .pipe(gulp.dest(dist + 'css'));
 });
 gulp.task('styles.watch', ['styles'], function () {
-  gulp.watch(config.styles.src, ['styles']);
+  gulp.watch('src/styles/**/*.styl', ['styles']);
 });
 
+// ============================================================================
 // CONTENT
-// =======
+// ============================================================================
 gulp.task('content', function () {
-  return gulp.src(config.content.src)
+  return gulp.src('content/**/*.md')
     .pipe($.plumber())
     .pipe($.frontMatter())
-    .on('data', config.content.frontMatterCopy)
+    .on('data', function (file) {
+      Object.keys(file.frontMatter).forEach(function (key) {
+        file[key] = file.frontMatter[key];
+      });
+      delete file.frontMatter;
+    })
     .pipe($.metalsmith()
       .metadata({
         jsFile: '/js/app-' + pkg.version + '.min.js',
@@ -82,20 +98,79 @@ gulp.task('content', function () {
         baseUrl: 'http://ksmithut.github.io'
       })
       .use(m.drafts())
-      .use(m.globMeta(config.content.globMeta[0]))
-      .use(m.globMeta(config.content.globMeta[1]))
-      .use(m.markdown(config.content.markdown))
+      .use(m.globMeta({
+        glob: 'blog/**/*.md',
+        meta: { template: 'post.hbs' }
+      }))
+      .use(m.globMeta({
+        glob: 'projects/**/*.md',
+        meta: { template: 'project.hbs' }
+      }))
+      .use(m.markdown({
+        smartypants: true,
+        gfm: true,
+        tables: true
+      }))
       .use(m.excerpts())
-      .use(m.permalinks(config.content.permalinks))
+      .use(m.permalinks({
+        pattern: ':path/'
+      }))
       .use(m.buildDate())
-      .use(m.collections(config.content.collections))
-      .use(m.collectionsPaginate(config.content.collectionsPaginate))
-      .use(m.collectionsTitles(config.content.collectionsTitles))
-      .use(m.templates(config.content.templates))
+      .use(m.collections({
+        posts: {
+          pattern: 'blog/**/*.html',
+          sortBy: 'date',
+          reverse: true
+        },
+        projects: {
+          pattern: 'projects/**/*.html',
+          sortBy: 'title',
+          reverse: false
+        }
+      }))
+      .use(m.collectionsPaginate({
+        posts: {
+          perPage: 10,
+          template: 'posts.hbs',
+          first: 'blog/index.html',
+          path: 'blog/page/:num/index.html'
+        },
+        projects: {
+          perPage: 10,
+          template: 'projects.hbs',
+          first: 'projects/index.html',
+          path: 'projects/page/:num/index.html'
+        }
+      }))
+      .use(m.collectionsTitles({
+        posts: 'Blog',
+        projects: 'Projects'
+      }))
+      .use(m.templates({
+        engine: 'handlebars',
+        directory: 'src/templates',
+        partials: {
+          footer: 'partials/footer',
+          header: 'partials/header',
+          pagination: 'partials/pagination'
+        },
+        helpers: require('./src/templates/handlebar-helpers')
+      }))
     )
     .pipe($.minifyHtml())
-    .pipe(gulp.dest(dist + config.content.dest));
+    .pipe(gulp.dest(dist));
 });
 gulp.task('content.watch', ['content'], function () {
-  gulp.watch([config.content.src, 'src/templates/**/*.hbs'], ['content']);
+  gulp.watch(['content/**/*.md', 'src/templates/**/*.hbs'], ['content']);
+});
+
+// ============================================================================
+// SERVER
+// ============================================================================
+gulp.task('server', function () {
+  require('connect')().use(require('serve-static')(dist)).listen(8000);
+  var server = $.livereload();
+  gulp.watch(dist + '/**/*').on('change', function(file) {
+    server.changed(file.path);
+  });
 });
