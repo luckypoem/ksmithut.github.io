@@ -7,8 +7,6 @@ var m       = require('load-metalsmith-plugins')();
 var pkg     = require('./package');
 var dist    = 'dist/';
 
-console.log(lib.css);
-
 $.metalsmith        = require('gulpsmith');
 m.collectionsTitles = require('./lib/collections-titles');
 
