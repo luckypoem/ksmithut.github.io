@@ -2,10 +2,15 @@
 
 var gulp    = require('gulp');
 var lib     = require('bower-files')();
-var $       = require('./lib/gulp-plugins');
-var m       = require('./lib/metalsmith-plugins');
+var $       = require('gulp-load-plugins')();
+var m       = require('load-metalsmith-plugins')();
 var pkg     = require('./package');
 var dist    = 'dist/';
+
+console.log(lib.css);
+
+$.metalsmith        = require('gulpsmith');
+m.collectionsTitles = require('./lib/collections-titles');
 
 gulp.task('default', ['watch']);
 
@@ -154,7 +159,7 @@ gulp.task('content', function () {
           header: 'partials/header',
           pagination: 'partials/pagination'
         },
-        helpers: require('./src/templates/handlebar-helpers')
+        helpers: require('./lib/handlebar-helpers')
       }))
     )
     .pipe($.minifyHtml())

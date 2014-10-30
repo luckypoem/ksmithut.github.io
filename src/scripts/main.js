@@ -41,8 +41,64 @@
     window.FastClick.attach(elem);
   }
 
+  function navbarToggle() {
+    var toggleButtons = document.getElementsByClassName('navbar-toggle');
+
+    forEach(toggleButtons, function (button, i) {
+      var target = document.getElementById(button.dataset.target);
+      button.onclick = function (e) {
+        toggleClass(target, button.dataset.toggle);
+        toggleClass(button, 'collapsed');
+        return false;
+      };
+    });
+  }
+
+  function forEach(collection, cb) {
+    for (var i in collection) {
+      if (collection.hasOwnProperty(i) && i !== 'length') {
+        cb(collection[i], i, collection);
+      }
+    }
+  }
+
+  function addClass(node, className) {
+    var classes = getClasses(node);
+    if (!hasClass(node, className)) {
+      classes.push(className);
+      setClasses(node, classes);
+    }
+  }
+
+  function removeClass(node, className) {
+    var classes  = getClasses(node);
+    var classPos = classes.indexOf(className);
+    if (classPos !== -1) {
+      classes.splice(classPos, 1);
+      setClasses(node, classes);
+    }
+  }
+
+  function toggleClass(node, className) {
+    var method = hasClass(node, className) ? removeClass : addClass;
+    method(node, className);
+  }
+
+  function hasClass(node, className) {
+    return getClasses(node).indexOf(className) !== -1;
+  }
+
+  function getClasses(node) {
+    return node.className.split(' ');
+  }
+
+  function setClasses(node, classesArray) {
+    node.className = classesArray.join(' ');
+  }
+
   domReady(window, function () {
     fastclick();
+    navbarToggle();
   });
 
 })(window);
