@@ -1,0 +1,31 @@
+@import 'clearfix'
+@import 'responsive'
+
+grid($breakpoints, $numCols = 12, $gutterWidth = 30)
+
+  $halfGutter = unit($gutterWidth / 2, 'px')
+
+  container($fixedWidth = false)
+    padding 0 $halfGutter
+    box-sizing border-box
+    margin 0 auto
+    if $fixedWidth
+      for $name, $breakpoint in $breakpoints
+        if $breakpoint
+          @media (min-width: $breakpoint)
+            width $breakpoint
+
+  row()
+    margin 0 (0 - $halfGutter)
+    clearfix()
+
+  // col({sm: 12, md: 4})
+  col($colDef)
+    position relative
+    min-height 1px
+    padding-right 15px
+    padding-left 15px
+    for $name, $cols in $colDef
+      +minWidth($breakpoints[$name])
+        float left
+        width unit($cols / $numCols * 100, '%')

@@ -1,4 +1,5 @@
 ---
-title: Home
-template: home.hbs
+title: Welcome
+description: ksmithut's blog
+template: home.jade
 ---
