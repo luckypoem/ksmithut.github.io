@@ -8,25 +8,25 @@ var $         = require('../plugins');
 var m         = require('load-metalsmith-plugins')();
 
 module.exports = function () {
-  gulp.src('content/**/*.md')
-    .pipe($.plumber())
+  return gulp.src('content/**/*.md')
+    //.pipe($.plumber())
     .pipe($.frontMatter()).on('data', frontMatterAssign)
     .pipe(gulpsmith()
-      // Exclude those with 'draft: true'
-      .use(m.drafts())
-      // Validate some properties
-      .use(m.validate({
-        title: { exists: true, type: 'String' },
-        description: { exists: true, type: 'String' }
-      }))
-      // Set global variables
-      .use(m.define({
+      .on('error', console.log.bind(console))
+      .metadata({
         jsFile: config.scripts.path,
         cssFile: config.styles.path,
         site: {
           name: 'ksmithut',
           base: 'http://ksmithut.github.io'
         }
+      })
+      // Exclude those with 'draft: true'
+      .use(m.drafts())
+      // Validate some properties
+      .use(m.validate({
+        title: { exists: true, type: 'String' },
+        description: { exists: true, type: 'String' }
       }))
       // Markdown parsing
       .use(m.markdown({
@@ -110,7 +110,7 @@ module.exports = function () {
     .pipe(gulp.dest(config.dest));
 };
 
-function frontMatterAssign (file) {
+function frontMatterAssign(file) {
   assign(file, file.frontMatter);
   delete file.frontMatter;
 }

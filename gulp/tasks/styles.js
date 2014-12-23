@@ -5,8 +5,10 @@ var path   = require('path');
 var config = require('../config');
 var $      = require('../plugins');
 
+var stylesPath = path.join(config.src, 'styles', 'main.styl');
+
 module.exports = function () {
-  return gulp.src(path.join(config.src, 'styles', 'main.styl'))
+  return gulp.src(config.styles.lib.concat(stylesPath))
     .pipe($.plumber())
     .pipe($.stylus({sourcemap: {inline: true}}))
     .pipe($.sourcemaps.init({loadMaps: true}))

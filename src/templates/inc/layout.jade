@@ -8,11 +8,22 @@ html(lang='en')
     block title
       title #{title} | #{site.name}
     meta(name='description', content=description)
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Ubuntu|Rokkitt:400,700')
     link(rel='stylesheet', href=cssFile)
     link(rel='canonical', href=site.base + cleanPath)
     if noindex
       link(name='robots', content='noindex,nofollow')
   body
-    block content
-    script(src=jsFile)
+    //- Header
+    header.page-header
+      a.logo(href='/'): img(src='/images/logos/ksmithut-logo.svg', alt='ksmithut Logo')
+      nav.main-nav
+        a.nav-item(href='/') Home
+        a.nav-item(href='/posts') Blog
+    //- Main block
+    main: block content
+    //- Footer
+    footer.page-footer
+    //- Include scripts
+    script(src=jsFile, async)
   

@@ -8,7 +8,7 @@ var $      = require('../plugins');
 var scriptsPath = path.join(config.src, 'scripts', '**', '*.js');
 
 module.exports = function () {
-  return gulp.src(scriptsPath)
+  return gulp.src(config.scripts.lib.concat(scriptsPath))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.concat(config.scripts.file))
