@@ -1,10 +1,16 @@
+.page-header
+  background-color $black
+  padding-top $halfGutter
+  padding-bottom $halfGutter
+  border-bottom 8px solid $blue
+
 .logo
   display inline-block
   width 50px
   height 50px
 
 .main-nav
-  font-size 26px
+  font-size 22px
   text-align center
   float right
   height 50px
@@ -15,3 +21,6 @@
   line-height 50px
   height 100%
   display inline-block
+  color $white
+  &:hover
+    color darken($white, 10%)
