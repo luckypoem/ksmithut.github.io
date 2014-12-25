@@ -62,11 +62,19 @@ module.exports = function () {
             collection: 'posts',
             template: 'post.jade'
           }
+        },
+        {
+          pattern: 'projects/**/*.html',
+          metadata: {
+            collection: 'projects',
+            template: 'project.jade'
+          }
         }
       ]))
       // Set up the collections
       .use(m.collections({
-        posts: {sortBy: 'date', reverse: true}
+        posts: {sortBy: 'date', reverse: true},
+        projects: {sortBy: 'title'}
       }))
       // Makes the urls clean without any .html junk
       .use(function (files) {
@@ -77,12 +85,22 @@ module.exports = function () {
       // Paginate the collections
       .use(m.pagination({
         'collections.posts': {
-          perPage: 2,
+          perPage: 10,
           template: 'posts.jade',
           first: 'posts/index.html',
           path: 'posts/:num/index.html',
           pageMetadata: {
             title: 'Posts',
+            noindex: true
+          }
+        },
+        'collections.projects': {
+          perPage: 10,
+          template: 'projects.jade',
+          first: 'projects/index.html',
+          path: 'projects/:num/index.html',
+          pageMetadata: {
+            title: 'Projects',
             noindex: true
           }
         }

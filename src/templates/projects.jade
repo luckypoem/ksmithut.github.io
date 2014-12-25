@@ -1,0 +1,16 @@
+extends ./inc/layout.jade
+
+block title
+  title= [title, pagination.num, site.name].join(' | ')
+
+block content
+  h1 Projects
+  ul
+    each project in pagination.files
+      li: a(href=project.cleanPath)
+        h3= project.title
+  ul.pagination
+    if pagination.previous
+      li.prev: a(href=pagination.previous.cleanPath) Prev
+    if pagination.next
+      li.next: a(href=pagination.next.cleanPath) Next
