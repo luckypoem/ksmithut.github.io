@@ -166,6 +166,15 @@ To actually update all of the software, run `sudo apt-get upgrade`. Make sure
 you run the previous command first, so that it actually gets the most recent
 version.
 
+## Other helpful commands
+
+You'll want to make sure to shutdown and restart your raspberry pi safely when
+the time comes. Otherwise, you could corrupt your data.
+
+To shutdown safely, run `sudo shutdown -h now`.
+
+To reboot safetly, run `sudo shutdown -r now`.
+
 ## Install Node
 
 You can use `apt-get` to install node, but it install a really old version of it
