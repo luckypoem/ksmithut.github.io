@@ -5,11 +5,12 @@ block title
 
 block content
   h1 Posts
-  ul
+  ul.list.post-list
     each post in pagination.files
-      li: a(href=post.cleanPath)
+      li.list-item.post: a(href=post.cleanPath)
+        h4.date= post.date.toDateString()
         h3= post.title
-        h4= post.date
+        p= post.description
   ul.pagination
     if pagination.previous
       li.prev: a(href=pagination.previous.cleanPath) Prev

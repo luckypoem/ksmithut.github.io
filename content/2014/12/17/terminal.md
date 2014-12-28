@@ -1,7 +1,9 @@
 ---
 title: Introduction to Terminal
 description: A resource to help you remove your fear (and perhaps instill new fears) of the OS X Terminal.
-tags: technology, tutorials
+tags:
+- technology
+- tutorials
 ---
 
 ## To whom it may concern...

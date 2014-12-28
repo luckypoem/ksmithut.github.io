@@ -1,7 +1,9 @@
 ---
 title: Introduction to Programming
 description: How I got started programming, why I got interested, and why I continue to program
-tags: development, technology
+tags:
+- development
+- technology
 ---
 
 I first got started programming in High School. It was a fairly new class, and

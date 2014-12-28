@@ -1,7 +1,10 @@
 ---
 title: The Current State of Things
 description: I go into some of the current technologies that I'm interested in.
-tags: personal, technology, development
+tags:
+- personal
+- technology
+- development
 ---
 
 Since my first post was yesterday, I thought it might be good to document the

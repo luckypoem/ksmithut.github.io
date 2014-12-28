@@ -1,7 +1,8 @@
 ---
 title: Introduction
 description: A simple introduction to me and my hopes for this site
-tags: personal
+tags:
+- personal
 ---
 
 Hello. My name is Keith.

@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Node.js on Raspberry Pi | ksmithut</title><meta name="description" content="A walkthrough of what I did to get Node.js running on Raspberry Pi"><link rel="stylesheet" href="/css/app-0.0.0.min.css"><link rel="canonical" href="http://ksmithut.github.io/2014/12/27/node-js-on-raspberry-pi/"></head><body><header class="page-header"><a href="/" class="logo"><img src="/images/logos/ksmithut-logo.svg" alt="ksmithut Logo"></a><nav class="main-nav"><a href="/" class="nav-item">Home</a><a href="/projects" class="nav-item">Projects</a><a href="/posts" class="nav-item">Blog</a></nav></header><main class="page-content"><h1>Node.js on Raspberry Pi</h1><h4 class="date">Sat Dec 27 2014</h4><article><p>So for Christmas this year, my father got me and my brother a <a href="http://www.raspberrypi.org/">Raspberry
+Pi</a> (Model B+) for each of us. A Raspberry Pi is a
+small, inexpensive computer that you can use to play around with programming
+stuff and electronics stuff. Below are some of the key features of the Model B+</p>
+<ul>
+<li>40 pin GPIO (General Purpose Input/Output) which you can hook up to
+a breadboard</li>
+<li>4 USB 2.0 slots</li>
+<li>A micro SD slot (for your boot drive)</li>
+<li>Tons of development tutorials and resources!</li>
+</ul>
+<h2 id="my-setup">My setup</h2>
+<p>This is just for context. All of these components are replaceable with what you
+probably already have. Windows or Linux is fine, but you just need a way to
+write to a microSD card from your computer.</p>
+<ul>
+<li>MacBook Pro running OS X Yosemite (has an SD slot)</li>
+<li>Internet access, wireless router with an open ethernet port and a cable to go
+with it</li>
+<li>Raspberry Pi: Model B+</li>
+<li>32 GB PNY microSD (not all microSDs work, see below)</li>
+</ul>
+<p>The kit that my father bought came with an 8GB microSD, which is plenty of
+space for anything that I would be using it for. The only space killers that you
+should be worried about are media files (images, audio, video). If you’re not
+worried about those, just plan for enough space to use for your database or
+whatever coding projects you want to use it for.</p>
+<p>When doing initial research, I found that there are some microSDs that don’t
+work as well with Raspberry PI. The following link is <a href="http://elinux.org/RPi_SD_cards">the most comprehensive
+list of compatible and incompatible microSDs for Raspberry
+Pi</a>. Honestly, I think that 32 GB is still way
+to much for my purposes, but it’s nice to have some space to play around with.</p>
+<p>Although the included microSD came with
+<a href="http://www.raspberrypi.org/downloads/">NOOBS</a> already installed on it, I wanted
+to try to install one of the Raspberry Pi flavors of Linux from scratch. I
+figured that I might be doing a lot of it because this might just become my goto
+hobby.</p>
+<h2 id="before-you-begin">Before you begin</h2>
+<p>Here are some of the things you should be familiar with before we begin. You
+might not need to know everything on this list, but it will help if you run into
+any issues.</p>
+<ul>
+<li><strong>Terminal</strong>. Having a solid understanding of how to navigate in Linux land is
+super-helpful. There are Windows alternative (PuTTY will likely show up in your
+search).</li>
+<li><strong>Linux</strong>. Again, you don’t really have to know it, because that may be the
+reason you got a Raspberry Pi in the first place. If you don’t know it, you’ll
+get to know it really well.</li>
+</ul>
+<h2 id="flash-sd-card-with-linux">Flash SD Card with Linux</h2>
+<p>Don’t put in your SD card in just yet. Be sure that you can access your microSD.
+For me, that’s having an SD card adapter for the microSD so I can plug it into
+my Mac.</p>
+<p>First, you should decide on a <a href="http://www.raspberrypi.org/downloads/">Raspberry Pi Linux
+Distro</a>. I’ve chosen the recommended one,
+Raspbian. Download and unzip the package until you are left with the <code>*.img</code>
+file.</p>
+<h3 id="mac-os-x">Mac OS X</h3>
+<ol>
+<li><p>Open up the Terminal (<code>/Applications/Utilities/</code>). While your SD
+card is still out, type in <code>df -h</code>. This will list the free space for all of
+your drives, but for our purposes, just take note of the ones that are there.</p>
+</li>
+<li><p>Now insert your drive and run <code>df -h</code> again. Take note of the new one that
+appeared. It should look like <code>/dev/disk2s1</code>, but the numbers can be different.
+I’m not completely sure of the naming scheme, but it seems like the first number
+is that the disk was the nth disk to be mounted, and the ‘s’ number is the
+partition. But again, that’s only a guess.</p>
+</li>
+<li><p>Next you’ll need to unmount the disk. This does not mean eject or or physically
+remove the the disk. Do do this, we’ll use the Terminal. If you eject it through
+the Finder, you’ll need to start the whole process over. To unmount it, use the
+following command in your terminal: <code>sudo diskutil unmount /dev/disk2s1</code>. Be
+sure to replace the disk name with the one you found from the previous step. And
+don’t remove the SD card yet!</p>
+</li>
+<li><p>Next you’ll need the raw device name of the card. To do that, replace <code>disk</code>
+with <code>rdisk</code> from that disk name you got from before, and remove the ‘s1’ part.
+So you should end up with something like <code>/dev/rdisk2</code>.</p>
+</li>
+<li><p>Afterwards, we need to copy the disk image over bit for bit. Make sure your
+<code>whatever.img</code> file is somewhere you can get to it. I put in temporarily in my
+home directory. Use the following command to copy the image over:</p>
+<pre><code>sudo dd bs=1m if=~/2014-12-24-wheezy-raspbian.img of=/dev/rdisk2
+</code></pre><p>Make sure you replace the paths and such with your own values.</p>
+</li>
+<li><p>After that command finishes, you’re ready to insert it into the Raspberry Pi.
+You don’t get any feedback from the command, but it should only take a few
+minutes.</p>
+</li>
+</ol>
+<h3 id="windows">Windows</h3>
+<p>I haven’t personally tried it on a Windows machine, but you should be able to
+find <a href="http://elinux.org/RPi_Easy_SD_Card_Setup">the Windows instructions you need
+here</a></p>
+<h2 id="ssh-into-raspberry-pi">SSH into Raspberry Pi</h2>
+<p>Make sure your Raspberry Pi is turned off and unplugged if it isn’t already. Put
+microSD card in the microSD slot of your Raspberry Pi. Connect the ethernet port
+with the ethernet cable to your router or wherever else you might get an
+ethernet connection. Now you can plug in the power.</p>
+<p>SSH (secure shell) is enabled by default, even on boot, so you can start it up
+and configure it without a monitor or keyboard connected.</p>
+<p>You’ll want to wait a minute or two after you connect the power before
+connecting via ssh, just to make sure it’s all the way booted. You’ll need to
+know the IP address your router assigned it. Go into your router settings and
+look for something like DHCP Client Table. You’ll see a host named raspberrypi.
+Use that address for the next part.</p>
+<p>Now you can ssh into your new computer.</p>
+<pre><code>ssh pi@192.168.1.123
+</code></pre><p>Replace the IP address with the IP address you found previously. When asked, say
+yes to add it to your known hosts. It will ask you for the password. The default
+password is <code>raspberry</code>.</p>
+<h2 id="setup">Setup</h2>
+<p>When you logged into the Raspberry Pi, it probably displayed a message for you
+to set up the machine using a command: <code>sudo raspi-config</code>. Go ahead and run
+that. It will come up with a blue menu. The first option is to expand the file
+system to the entire microSD. You will need to reboot for that to take effect.
+The second option is to change the password for the pi user. You don’t have to
+do that, but I did. If you do change it, make sure you remember it for the next
+time you ssh into the machine.</p>
+<p>I’ve left all of the other configuration options the same.</p>
+<p>You’ll probably also want to update all of the other packages on the raspberry
+pi. If you’ve done anything with Linux, you’ve probably used <code>apt-get</code> or
+something like it. If you haven’t heard of it, it’s basically a package manager
+for command-line utilities like <code>wget</code>, <code>curl</code>, and <code>git</code>.</p>
+<p>To update the list of all packages and their versions, run <code>sudo apt-get
+update</code>. This doesn’t actually install any new or upgraded software, it
+essentially just updates the lists of potential upgrades.</p>
+<p>To actually update all of the software, run <code>sudo apt-get upgrade</code>. Make sure
+you run the previous command first, so that it actually gets the most recent
+version.</p>
+<h2 id="install-node">Install Node</h2>
+<p>You can use <code>apt-get</code> to install node, but it install a really old version of it
+(at the time of writing this post). There is a way to download the latest
+version of node that is compatible with the software and hardware on your
+raspberry pi. It’s located here:
+<a href="http://node-arm.herokuapp.com/">node-arm.herokuapp.com</a>. Per their
+instructions, you can download the latest version using the following command:</p>
+<pre><code class="lang-bash">wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+</code></pre>
+<p>Then to install it use this command:</p>
+<pre><code class="lang-bash">sudo dpkg -i node_latest_armhf.deb
+</code></pre>
+<p>Now you can type <code>node -v</code> to check the version of node.</p>
+<h2 id="update-npm-and-install-node-gyp">Update npm and install node-gyp</h2>
+<p>The version of <code>npm</code> (Node’s package manager) that comes with node is not the
+latest version. There are often features built into the latest version that
+aren’t available in the one packaged with Node. There are probably bug fixes as
+well. You can update <code>npm</code> using the following command:</p>
+<pre><code class="lang-bash">sudo npm update npm -g
+</code></pre>
+<p><code>node-gyp</code> is a module used to compile native addons to node modules. It’s good
+to get an updated version of this. I think I remember reading somewhere that
+Raspbian isn’t capable of compiling native modules, but I can’t recall where.</p>
+<p>To install the latest version, run:</p>
+<pre><code class="lang-bash">sudo npm install node-gyp g
+</code></pre>
+<p>Another thing I like to do is remove the need to <code>sudo npm</code> everytime I need to
+use <code>npm</code>. What you need to do is change the directory and file permissions of
+a coupld directories: <code>/usr/local</code> and <code>~/.npm</code>. You could get more specific in
+<code>/usr/local</code> to get to the <code>node_modules/</code> directory, but anything I install in
+<code>/usr/local</code> is something I want my user to have access to anyway.</p>
+<p>To change the ownership, run:</p>
+<pre><code class="lang-bash">sudo chown -R pi /usr/local
+mkdir ~/.npm
+sudo chown -R pi ~/.npm
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>Now you can start running node on your raspberry pi! I’m still looking at
+modules to use the GPIO. There are a few, but its hard to know which would be
+best. I’ll cover that in a later post when I get a chance to investigate some
+of them.</p>
+</article></main><footer class="page-footer"></footer><script src="/js/app-0.0.0.min.js" async></script></body></html>

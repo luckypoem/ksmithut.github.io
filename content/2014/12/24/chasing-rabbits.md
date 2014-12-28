@@ -1,7 +1,10 @@
 ---
 title: Chasing Rabbits
 description: Learning new technology can be challenging, especially when there are so many things to learn.
-tags: technology, development
+tags:
+- personl
+- technology
+- development
 ---
 
 If you've every followed [Hacker News](https://news.ycombinator.com/news),

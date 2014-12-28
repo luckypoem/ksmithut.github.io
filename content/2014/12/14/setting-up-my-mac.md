@@ -1,7 +1,8 @@
 ---
 title: Setting Up My Dev Computer
 description: Setting up a Computer for your development environment can be a tedious process. I go into my personal, and opinionated preference for dev work.
-tags: development
+tags:
+- development
 ---
 
 I spend way to much time fine-tuning my computer for my dev environment. I've

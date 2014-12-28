@@ -5,10 +5,11 @@ block title
 
 block content
   h1 Projects
-  ul
+  ul.list.project-list
     each project in pagination.files
-      li: a(href=project.cleanPath)
+      li.list-item.project: a(href=project.cleanPath)
         h3= project.title
+        p= project.description
   ul.pagination
     if pagination.previous
       li.prev: a(href=pagination.previous.cleanPath) Prev
