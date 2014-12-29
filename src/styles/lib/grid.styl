@@ -25,7 +25,11 @@ col($colDef)
   min-height 1px
   padding-right 15px
   padding-left 15px
+  float left
+  width 100%
   for $name, $cols in $colDef
-    +minWidth($breakpoints[$name])
-      float left
-      width unit($cols / $numCols * 100, '%')
+    if ($breakpoints[$name])
+      +minWidth($breakpoints[$name])
+        width unit($cols / $numCols * 100, '%')
+    else
+      width unit($cols / numCols * 100, '%')

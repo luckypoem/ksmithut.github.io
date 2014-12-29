@@ -4,4 +4,31 @@ block title
   title= site.name
 
 block content
-  h1= title
+  .home
+    h1.styled= title
+    p.lead= subheader
+    .row
+      .col-6
+        h2 What I Do
+        hr
+        p Trying out new things is a hobby of mine. I like to complete projects
+          | quickly, but I love to expand them to see what else can be done.
+          | Seeking to understand the incomprehensible is my passion. For me,
+          | learning was never confined to the classroom setting.
+        p I am, at heart, a problem solver. I figure out perplexing issues and
+          | fix them with computers. Professionally, architecting Internet
+          | applications is what I focus on, but I tinker around in a lot of
+          | software development areas.
+        h2 How I Do It
+        hr
+        p
+      .col-6
+        h2 Recent Posts
+        hr
+        ul.list.post-list
+          for i in [0,1,2]
+            - post = collections.posts[i]
+            li.list-item.post: a(href=post.cleanPath)
+              h3= post.title
+              h5.date= post.date.toDateString()
+              p= post.description

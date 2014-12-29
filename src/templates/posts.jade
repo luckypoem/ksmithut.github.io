@@ -8,8 +8,8 @@ block content
   ul.list.post-list
     each post in pagination.files
       li.list-item.post: a(href=post.cleanPath)
+        h2= post.title
         h4.date= post.date.toDateString()
-        h3= post.title
         p= post.description
   ul.pagination
     if pagination.previous
