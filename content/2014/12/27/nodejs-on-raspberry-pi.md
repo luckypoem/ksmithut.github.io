@@ -214,7 +214,7 @@ Raspbian isn't capable of compiling native modules, but I can't recall where.
 To install the latest version, run:
 
 ```bash
-sudo npm install node-gyp g
+sudo npm install node-gyp -g
 ```
 
 Another thing I like to do is remove the need to `sudo npm` everytime I need to
