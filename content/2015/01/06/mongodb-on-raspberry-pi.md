@@ -7,7 +7,7 @@ tags:
 - tutorials
 ---
 
-In my [last post](/2014/12/27/nodejs-on-raspberry-pi/), I went over how I got a
+In my [last post](/2014/12/27/node-js-on-raspberry-pi/), I went over how I got a
 recent version of NodeJS running on my Raspberry Pi (model b+ running Raspbian).
 Since I got Node up and running, I wanted to get a database up and running as
 well.
