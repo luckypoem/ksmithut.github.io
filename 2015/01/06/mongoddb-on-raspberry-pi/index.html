@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MongodDB on Raspberry Pi | ksmithut</title><meta name="description" content="A walkthrough of how I got a recent version of MongoDB running on Raspberry Pi"><link rel="stylesheet" href="/css/app-0.0.0.min.css"><link rel="canonical" href="http://ksmithut.github.io/2015/01/06/mongoddb-on-raspberry-pi/"></head><body><header class="page-header"><a href="/" class="logo"><img src="/images/logos/ksmithut-logo.svg" alt="ksmithut Logo"></a><nav class="main-nav"><a href="/" class="nav-item">Home</a><a href="/projects" class="nav-item">Projects</a><a href="/posts" class="nav-item">Blog</a></nav></header><main class="page-content"><h1>MongodDB on Raspberry Pi</h1><h4 class="date">Tue Jan 06 2015</h4><article><p>In my <a href="/2014/12/27/nodejs-on-raspberry-pi/">last post</a>, I went over how I got a
+recent version of NodeJS running on my Raspberry Pi (model b+ running Raspbian).
+Since I got Node up and running, I wanted to get a database up and running as
+well.</p>
+<p>The first tutorials that I ran into involved building mongodb from source. I
+tried it, but as they warned it took a lot of time. I started the first build
+process before my wife and I went to go see the last Hobbit movie. When we came
+back, it was still building, and stayed that way for another couple of hours.
+There were all sorts of <code>swp method deprecated</code> warnings and such that I did not
+care for seeing. It still worked, but it was a big pain.</p>
+<p>Wanting a cleaner and faster install, I came across a <a href="https://emersonveenstra.net/mongodb-raspberry-pi/">blog
+post</a> that had a much simpler
+solution, well, sort of. The blog post has you do a lot of stuff like moving
+everything from your <code>/bin/</code>, <code>/lib/</code>, and <code>/includes/</code> directories into your
+<code>/usr/{bin|lib|includes}</code> directory. Although I would be pretty comfortable
+doing that, I wanted to avoid that step if possible. I actually came across this
+article while I was in the ‘build from source’ search, but that step turned me
+off.</p>
+<p>In that article, he mentions that someone wrote a simple install script that
+does everything for you. When I looked at the install script, it didn’t appear
+to do any of the <code>/bin/</code> copying. The repo is located here:
+<a href="https://github.com/svvitale/mongo4pi">github.com/svvitale/mongo4pi</a>.
+Here is what I ended up doing on my Raspberry Pi:</p>
+<pre><code class="lang-bash"># from my user directory, clone the repo
+git clone https://github.com/svvitale/mongo4pi.git
+# move to the directory
+cd mongo4pi
+# run the install script
+./install.sh
+</code></pre>
+<p>And thats it! Now mongodb is running, and will automatically start when your
+Raspberry Pi boots.</p>
+<p>One thing that is mentioned in the blog post is that you never want to unplug
+your Raspberry Pi while mongodb is running because you will corrupt your
+database and will have all sorts of problems. Everytime you’re about to shutdown
+your Raspberry Pi, just run <code>sudo service mongod stop</code>. Then you can run
+<code>sudo shutdown -h now</code>.</p>
+</article></main><footer class="page-footer cf"><p class="copyright">&copy; Keith Smith 2014</p><ul class="footer-links"><li><a href="https://github.com/ksmithut">GitHub</a></li></ul></footer><script src="/js/app-0.0.0.min.js" async></script></body></html>
