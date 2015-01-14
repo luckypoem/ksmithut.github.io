@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>From Mongoose to Sequelize | ksmithut</title><meta name="description" content="Why I decided that MongoDB isn't my go to database solution anymore."><link rel="stylesheet" href="/css/app-0.0.0.min.css"><link rel="canonical" href="http://ksmithut.github.io/2015/01/14/from-mongoose-to-sequelize/"></head><body><header class="page-header"><a href="/" class="logo"><img src="/images/logos/ksmithut-logo.svg" alt="ksmithut Logo"></a><nav class="main-nav"><a href="/" class="nav-item">Home</a><a href="/projects" class="nav-item">Projects</a><a href="/posts" class="nav-item">Blog</a></nav></header><main class="page-content"><h1>From Mongoose to Sequelize</h1><h4 class="date">Wed Jan 14 2015</h4><article><p>I might be jumping ahead of myself here, but I just had a really important
+realization that is affecting my goto technology stack.</p>
+<p>Up until recently, my default back-end tech stack was the following:</p>
+<ul>
+<li>Node.js (language/platform)</li>
+<li>MongoDB (database)</li>
+<li>Express.js (server framework)</li>
+<li>Mongoose (database ODM)</li>
+</ul>
+<p>This worked very well for me for several years. Having Javascript on the
+back-end, front-end, and database (sort-of) was amazing. It just felt right,
+like the Holy Grail of web architecture. I didn’t have to worry about setting
+up a new database/collection through the REPL or anything. I just needed to pass
+in my connection information to Mongoose.</p>
+<p>Then I starting thinking, how well does this scale? I’ve heard of sharding and
+stuff, but I’ve also heard that’s it’s complicated, and that if you don’t set it
+up right, <a href="http://www.infoq.com/news/2010/10/4square_mongodb_outage">disastrous things can
+happen</a>. I believe
+that I could scale MongoDB if I took the time to understand all of the planning
+and configuration that needs to happen.</p>
+<p>Another thing that I’ve run into a lot is that most applications deal with
+relational data. Although mongoose has some cools ways to <a href="http://learnboost.github.io/mongoose/docs/populate.html">deal with relational
+data</a>, it still has to
+make additional queries to populate the references. But then there’s
+<a href="http://www.tokutek.com/tokumx-for-mongodb/">TokuMX</a>, which is supposed to be a
+drop in replacement for MongoDB, but it supports ACID transactions (doing
+multiple document transactions in one query, such as joins). But it looks as if
+TokuMX <a href="https://github.com/LearnBoost/mongoose/issues/2565">isn’t going to be supported by the mongoose
+team</a>, so you won’t be able
+to take advantage of the ACID queries.</p>
+<p>Mongoose has been awesome to work with, for the most part. There just a couple
+inconsistencies that I can’t get over.</p>
+<ol>
+<li><p><strong>Validators and middleware don’t always get called.</strong> In their
+<a href="http://learnboost.github.io/mongoose/docs/api.html#model_Model.update">documentation</a>
+for <code>Model.update()</code> towards the bottom, it reads:</p>
+<blockquote>
+<p>Although values are casted to their appropriate types when using update, the
+following are not applied:</p>
+<ul>
+<li>defaults</li>
+<li>setters</li>
+<li>validators</li>
+<li>middleware</li>
+</ul>
+<p>If you need those features, use the traditional approach of first retrieving
+the document.</p>
+</blockquote>
+<p>That’s unacceptable to me. When I define middleware, I want it to be called
+every time something happens.</p>
+</li>
+<li><p><strong>Promises are returned…but not always, and sometimes you need <code>.exec</code>.</strong> I
+get that trying to appease the callback crowd and the Promise crowd can be quite
+a difficult thing to do, but please make up your mind.</p>
+<pre><code class="lang-javascript">// Use .exec() if using query chain and if you want to return a Promise
+User.findOne({username: &#39;username&#39;}, function (err, user) {});
+User.findOne({username: &#39;username&#39;}).exec(function (err, user) {});
+User.findOne({username: &#39;username&#39;}).exec().then(function (user) {}, function (err) {});
+
+// When using .create() it just returns a Promise
+User.create({username: &#39;username&#39;}, function (err, user) {});
+User.create({username: &#39;username&#39;}).then(function (user) {}, function (err) {});
+
+// No Promise for .save()
+var user = new User({username: &#39;username&#39;});
+user.save(function (err, user) {});
+</code></pre>
+<p>The other thing with their promises is that they rolled their own version.
+It’s compatible for the most part, it just doesn’t utilize <code>.catch()</code>. You
+just need to pass in a second method in your last <code>.then()</code>. That seems to
+work with the <a href="https://www.npmjs.com/package/bluebird">bluebird</a> Promise
+implementation</p>
+</li>
+<li><p><strong>Built in validation is minimal.</strong> Every time I make a user model with
+mongoose that requires an email, I facepalm when I remember that mongoose
+doesn’t do that, so I have to get another validation library. I’m all for
+modularity, but it sure would be nice if they handled the modularity so I didn’t
+have to.</p>
+</li>
+</ol>
+<p>Every time I work with Mongoose, I’m happy for the most part, but those three
+points cause me to vomit a little bit, every time.</p>
+<h2 id="moving-on-to-sql">Moving on to SQL</h2>
+<p>So I decided to go back to my roots in SQL-like libraries.
+<a href="https://github.com/sequelize/sequelize">sequelize</a> seemed to be a popular one,
+but I was afraid of code bloat because of how many different databases it
+supported.</p>
+<p>Then I started using it, and I was amazed. I still got a lot of the nice schema
+declaration sugar that I liked with middleware (hooks) and instance/class
+method declaration.</p>
+<p>And the greatest part is, that everything is Promise based. And even better, it
+uses my preferred Promise library, bluebird. No more Promise workarounds to get
+mongoose to do what I want.</p>
+<p>The part that I’m not a super huge fan of is having a database that has a strict
+schema. Migrations will take a bit more time, but sequelize even has migration
+tools which make creating database migrations much easier. I haven’t done much
+with it yet, but at least I know it’s been planned for.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>MongoDB still has its place in my heart. It’s super easy to get up and running,
+and to keep your database schema in the code. My issue is more with the tooling
+that goes around it. Mongoose is arguably the de facto ODM for MongoDB, but it
+still has some quirks that make it difficult to work with. Sequelize, however,
+has been a pleasure to work with. I ran into an issue this morning with one of
+their release candidates, but I was able to submit an issue, submit a pull
+request, and get it merged all within an hour.</p>
+</article></main><footer class="page-footer cf"><p class="copyright">&copy; Keith Smith 2014</p><ul class="footer-links"><li><a href="https://github.com/ksmithut">GitHub</a></li></ul></footer><script src="/js/app-0.0.0.min.js" async></script></body></html>
