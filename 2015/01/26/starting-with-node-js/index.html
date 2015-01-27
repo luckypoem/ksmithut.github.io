@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Starting with Node.js | ksmithut</title><meta name="description" content="How I get my dev environment set up with Node.js."><link rel="stylesheet" href="/css/app-0.0.0.min.css"><link rel="canonical" href="http://ksmithut.github.io/2015/01/26/starting-with-node-js/"></head><body><header class="page-header"><a href="/" class="logo"><img src="/images/logos/ksmithut-logo.svg" alt="ksmithut Logo"></a><nav class="main-nav"><a href="/" class="nav-item">Home</a><a href="/projects" class="nav-item">Projects</a><a href="/posts" class="nav-item">Blog</a></nav></header><main class="page-content"><div class="post-page"><h1>Starting with Node.js</h1><h4 class="date">Mon Jan 26 2015</h4><article><p><a href="http://nodejs.org/">Node.js</a> has long passed the new-kid-on-the-block stage
+about now, even though it hasn’t reached a 1.x release (at the time of writing).
+Before you even start to think about installing node on your machine, you should
+have a good reason to. Obvious reasons would be to play around with a new
+platform you’re not familiar with, or that’s what your team at work uses. If
+you’re not sure what you can use it for, this is what I have used it for, and
+what I currently use it for:</p>
+<ul>
+<li>Front-end library package management (<a href="http://bower.io/">bower</a>)</li>
+<li>Front-end asset build systems (<a href="http://gulpjs.com/">gulp</a>,
+<a href="http://gruntjs.com/">grunt</a>)</li>
+<li>Web Scraper</li>
+<li>Web Server (Web Service, API)</li>
+<li>Static Website Generator (this site)</li>
+<li>General Scripting language</li>
+</ul>
+<p>That being said, there are things it’s not so good at. Heavy computational stuff
+can grind a node application to a halt given the right amount of load. Holding
+state in memory is also something that you should not count on, but you can
+hold that state reliably in other sources.</p>
+<p>There are many things that it’s good at, but rather than overwhelm you, let’s
+just get the thing installed.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Access to the Internet.</li>
+<li>A Shell program, but on Windows, I believe you could access it with cmd.exe.
+<a href="https://github.com/ksmithut/ksmithut.github.io/pulls">Correct me</a> if I’m wrong.</li>
+</ul>
+<h2 id="simple-install">Simple install</h2>
+<p><a href="http://nodejs.org/">Download the installer</a> from the Node.js website. This one
+should be pretty straightforward for you. Once it’s installed, you’ll need to
+open up your command line tool. Type in <code>node</code> and press enter. You should get
+a REPL input character, so your terminal should look something like this:</p>
+<pre><code class="lang-bash">$ node # This is the line you entered
+&gt;
+</code></pre>
+<p>If that’s what you’ve got, then you’ve got Node.js installed! Now you can try
+putting in some javascript:</p>
+<pre><code class="lang-bash">&gt; var test = [1, 2, 3]; # press enter here
+undefined
+&gt; test # press enter here
+[ 1, 2, 3 ]
+</code></pre>
+<p>Next post, I plan on going over putting your code into files and running them.</p>
+<h2 id="advanced-install">Advanced install</h2>
+<p>For those using node professionally, or who want to, you may want to use some
+kind of node version manager, so you can easily switch which versions of node
+you are running.</p>
+<p>I’m using a Mac, so I’ve installed <code>[nvm](https://github.com/creationix/nvm)</code>
+via <code>[homebrew](http://brew.sh/)</code> (<code>brew install nvm</code>), but there are other
+node version managers. Nvm is one I’ve used for a while, but a really simple one
+to use is called <code>[n](https://github.com/tj/n)</code>. For windows, the nvm repository
+has some windows alternatives.</p>
+<p>From there, I can use <code>nvm install stable</code> to install the latest version of
+node. I also want to set a default version of node to use, so I use <code>nvm
+alias default stable</code>, but you can read their documentation on how to set
+different versions up as the default versions to use.</p>
+<p>You can also set up a <code>.nvmrc</code> file to have specific versions of node on a
+project by project basis.</p>
+<h2 id="io-js">io.js</h2>
+<p><a href="https://iojs.org/">io.js</a> is a fork of node.js that is maintained by some of
+the original developers of node.js. Basically, they didn’t agree with the way
+that the development was being managed on the project, so they decided to split
+off so that they could work in new features at a quicker pace. Right now, it’s
+comparable to v0.11.x of node. It has a lot of EcmaScript 6 features such as
+generators, block scoping, among <a href="https://github.com/lukehoban/es6features">other
+things</a>. I heard somewhere that people
+are trying to get the name changed to EcmaScript 2015… We’ll see how it turns
+out.</p>
+<p>If you’re getting into node, you definitely cannot ignore this. The good news is
+that if you’re using nvm, you can install io.js alongside node <code>nvm install
+iojs</code>, and just switch back and forth. If you use the installer, it will
+overwrite your node installation (if you used the installer for that, too).</p>
+</article></div></main><footer class="page-footer cf"><p class="copyright">&copy; Keith Smith 2014</p><ul class="footer-links"><li><a href="https://github.com/ksmithut">GitHub</a></li></ul></footer><script src="/js/app-0.0.0.min.js" async></script></body></html>
