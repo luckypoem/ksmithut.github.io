@@ -85,7 +85,7 @@ module.exports = function () {
       // Paginate the collections
       .use(m.pagination({
         'collections.posts': {
-          perPage: 10,
+          perPage: 5,
           template: 'posts.jade',
           first: 'posts/index.html',
           path: 'posts/:num/index.html',
